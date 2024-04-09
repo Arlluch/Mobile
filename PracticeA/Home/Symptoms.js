@@ -107,11 +107,18 @@ const Homepage = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
       >
+        <View style={styles.titleContainerr}>
+          <Text style={styles.title}>Feeling Sick?</Text>
+        </View>
+        <View style={styles.titleContainerr}>
+          <Text style={styles.text}>Select your symptoms below</Text>
+        </View>
         {Object.entries(DATA).map(([category, data]) => (
           <View key={category}>
             <View style={styles.titleContainer}>
               <Text style={styles.title}>{category}</Text>
             </View>
+
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.boxContainer}>
                 {data.map((item) => (
@@ -159,6 +166,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: "white",
   },
   titleContainer: {
     flexDirection: "row",
@@ -166,6 +174,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 10,
     marginTop: 20,
+  },
+  titleContainerr: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
   scrollContainer: {
     flexGrow: 1,
@@ -234,7 +250,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   activeButton: {
-    backgroundColor: "#FFB200",
+    backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,

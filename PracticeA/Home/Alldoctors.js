@@ -7,39 +7,17 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  TextInput,
 } from "react-native";
+import CardBox from "./CardBoxforalldoc";
 import { useNavigation } from "@react-navigation/native";
 
 const windowWidth = Dimensions.get("window").width;
 
-const DATA = [
-  {
-    id: "1",
-    color: "#F7F8FA",
-    image: require("../assets/dna.png"),
-    text1: "Genetics",
-    text2: "2,029 Doctors",
-  },
-  {
-    id: "2",
-    color: "#F7F8FA",
-    image: require("../assets/neurology.png"),
-    text1: "Neurology",
-    text2: "2,029 Doctors",
-  },
-];
-
-const Box = ({ color, image, text1, text2 }) => (
-  <View style={[styles.box, { backgroundColor: color }]}>
-    <Image source={image} style={styles.image} />
-    <Text style={styles.text}>{text1}</Text>
-    <Text style={styles.textt}>{text2}</Text>
-  </View>
-);
-
-const AppointmentList = () => {
+const Alldoctors = () => {
   const [activeButton, setActiveButton] = useState("Home");
   const [activeButton1, setActiveButton1] = useState("AAppointmentpage");
+  const [searchText, setSearchText] = useState("");
   const navigation = useNavigation();
 
   const handleButtonPress = (buttonName) => {
@@ -54,40 +32,71 @@ const AppointmentList = () => {
       navigation.navigate("AAppointmentpage");
     }
   };
-  const handleBoxPress = (item) => {
-    navigation.navigate("Location");
+  const navigateToFilter = () => {
+    navigation.navigate("Filter");
   };
+
+  const doctorsData = [
+    {
+      name: "John Doe",
+      specialization: "Internal Medicine",
+      language: "English, German",
+      location: "Im Obergarten 8, Hofheim am Taunus Taunus",
+      schedule: "Sunday, June 24 11:00 - 13:00",
+    },
+    {
+      name: "John Doe",
+      specialization: "Internal Medicine",
+      language: "English, German",
+      location: "Im Obergarten 8, Hofheim am Taunus Taunus",
+      schedule: "Sunday, June 24 11:00 - 12:00",
+    },
+    {
+      name: "John Doe",
+      specialization: "Medicine",
+      language: "German",
+      location: "Im Obergarten 8, Hofheim am Taunus Taunus",
+      schedule: "Sunday, June 24 12:00 - 13:00",
+    },
+  ];
 
   return (
     <View style={styles.container}>
+      <View style={styles.searchBarContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search..."
+          onChangeText={(text) => setSearchText(text)}
+          value={searchText}
+        />
+
+        <TouchableOpacity
+          style={styles.filterIconContainer}
+          onPress={navigateToFilter}
+        >
+          <Image
+            source={require("../assets/filter_icon.png")}
+            style={styles.filterIcon}
+          />
+        </TouchableOpacity>
+      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
       >
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Select the Doctor Specialization</Text>
+          {doctorsData.map((doctor, index) => (
+            <CardBox
+              key={index}
+              name={doctor.name}
+              specialization={doctor.specialization}
+              language={doctor.language}
+              location={doctor.location}
+              schedule={doctor.schedule}
+              navigation={navigation}
+            />
+          ))}
         </View>
-        <View style={styles.titleContainer}>
-          <Text style={styles.text}>our specialized doctors are below</Text>
-        </View>
-
-        {[...Array(5)].map((_, index) => (
-          <View key={index} style={styles.boxContainer}>
-            {DATA.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                onPress={() => handleBoxPress(item)}
-              >
-                <Box
-                  color={item.color}
-                  image={item.image}
-                  text1={item.text1}
-                  text2={item.text2}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-        ))}
       </ScrollView>
 
       <View style={styles.bottomButtonsContainer}>
@@ -118,62 +127,41 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white",
   },
-  titleContainer: {
+  searchBarContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
-    marginBottom: 10,
-    justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 10,
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+  },
+  filterIconContainer: {
+    marginLeft: 10,
+  },
+  filterIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
   },
   scrollContainer: {
-    flexGrow: 1,
-    paddingBottom: 80,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  boxContainer: {
-    flexDirection: "row",
     paddingHorizontal: 10,
   },
-  box: {
-    width: windowWidth / 2.2 - 10,
-    height: 220,
-    borderRadius: 20,
-    marginHorizontal: 5,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    justifyContent: "center",
+  titleContainer: {
+    justifyContent: "space-between",
     alignItems: "center",
-  },
-  image: {
-    width: "70%",
-    height: "50%",
-    resizeMode: "contain",
-    marginBottom: 10,
-  },
-  text: {
-    fontSize: 15,
-    fontWeight: "semibold",
-    textAlign: "center",
-  },
-  textt: {
-    fontSize: 10,
-    fontWeight: "thin",
-    textAlign: "center",
+    marginBottom: 80,
   },
   bottomButtonsContainer: {
     position: "absolute",
@@ -186,10 +174,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     borderTopWidth: 3,
-
     borderTopColor: "rgba(0, 0, 0, 0.2)",
   },
-
   bottomButton: {
     backgroundColor: "#fff",
     height: 50,
@@ -200,7 +186,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10,
   },
-
   buttonText: {
     fontSize: 16,
   },
@@ -212,4 +197,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppointmentList;
+export default Alldoctors;

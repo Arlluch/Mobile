@@ -11,8 +11,6 @@ import {
   Text,
   KeyboardAvoidingView,
 } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"; //To access the Icon
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height; //To fit in any device
@@ -119,6 +117,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     paddingHorizontal: 20,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
   hasText: {
     borderBottomColor: "#ccc",

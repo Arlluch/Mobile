@@ -10,10 +10,13 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  FlatList,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+
 const DATA = [
   {
     id: "1",
@@ -95,10 +98,102 @@ const Box = ({ color, image, text1, text2 }) => (
 
 function Homepage({ navigation }) {
   const [activeButton, setActiveButton] = useState("Home");
+  const [activeButton1, setActiveButton1] = useState("AAppointmentpage");
+  const [query1, setQuery1] = useState("");
+  const [query2, setQuery2] = useState("");
+  const [suggestions1, setSuggestions1] = useState([]);
+  const [suggestions2, setSuggestions2] = useState([]);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const handleButtonPress = (buttonName) => {
     setActiveButton(buttonName);
+    if (buttonName === "Home") {
+      navigation.navigate("homepage");
+    }
   };
+  const handleButtonPress1 = (buttonName1) => {
+    setActiveButton1(buttonName1);
+    if (buttonName1 === "AAppointmentpage") {
+      navigation.navigate("AAppointmentpage");
+    }
+  };
+
+  const handleInputChange1 = (text) => {
+    setQuery1(text);
+
+    const staticSuggestions = [
+      "Dr. Name",
+      "Dr. Name1",
+      "Fever",
+      "Pain",
+      "Body",
+    ];
+    const filteredSuggestions = staticSuggestions.filter((item) =>
+      item.toLowerCase().includes(text.toLowerCase())
+    );
+    setSuggestions1(filteredSuggestions);
+  };
+
+  const handleInputChange2 = (text) => {
+    setQuery2(text);
+
+    const staticSuggestions = [
+      "Location1",
+      "Location2",
+      "Location3",
+      "Location4",
+      "Location5",
+    ];
+    const filteredSuggestions = staticSuggestions.filter((item) =>
+      item.toLowerCase().includes(text.toLowerCase())
+    );
+    setSuggestions2(filteredSuggestions);
+  };
+
+  const handleSuggestionPress1 = (suggestion) => {
+    setQuery1(suggestion);
+    setSuggestions1([]);
+  };
+
+  const handleSuggestionPress2 = (suggestion) => {
+    setQuery2(suggestion);
+    setSuggestions2([]);
+  };
+
+  const hideSuggestions1 = () => {
+    setSuggestions1([]);
+  };
+
+  const hideSuggestions2 = () => {
+    setSuggestions2([]);
+  };
+
+  const toggleDropdown = (dropdown) => {
+    if (activeDropdown === dropdown) {
+      setActiveDropdown(null);
+    } else {
+      setActiveDropdown(dropdown);
+    }
+  };
+
+  const renderSuggestionItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.suggestionItem}
+      onPress={() => handleSuggestionPress1(item)}
+    >
+      <Text>{item}</Text>
+    </TouchableOpacity>
+  );
+
+  const renderSuggestionItem2 = ({ item }) => (
+    <TouchableOpacity
+      style={styles.suggestionItem}
+      onPress={() => handleSuggestionPress2(item)}
+    >
+      <Text>{item}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -111,20 +206,56 @@ function Homepage({ navigation }) {
           style={styles.background}
           source={require("../assets/Doctor.png")}
         >
-          <View style={styles.marg}>
-            <View style={styles.contentContainer}>
+          <View style={styles.selectListContainer}>
+            <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Search here..."
-                placeholderTextColor="#888"
+                value={query1}
+                onChangeText={handleInputChange1}
+                onFocus={() => toggleDropdown(1)}
               />
+              {activeDropdown === 1 && suggestions1.length > 0 && (
+                <>
+                  <FlatList
+                    data={suggestions1}
+                    renderItem={renderSuggestionItem}
+                    keyExtractor={(item, index) => index.toString()}
+                    style={styles.suggestionList}
+                  />
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={hideSuggestions1}
+                  >
+                    <MaterialIcons name="close" size={24} color="black" />
+                  </TouchableOpacity>
+                </>
+              )}
             </View>
-            <View style={styles.contentContainer}>
+            <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Search Location"
-                placeholderTextColor="#888"
+                value={query2}
+                onChangeText={handleInputChange2}
+                onFocus={() => toggleDropdown(2)}
               />
+              {activeDropdown === 2 && suggestions2.length > 0 && (
+                <>
+                  <FlatList
+                    data={suggestions2}
+                    renderItem={renderSuggestionItem2}
+                    keyExtractor={(item, index) => index.toString()}
+                    style={styles.suggestionList}
+                  />
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={hideSuggestions2}
+                  >
+                    <MaterialIcons name="close" size={24} color="black" />
+                  </TouchableOpacity>
+                </>
+              )}
             </View>
           </View>
 
@@ -135,6 +266,7 @@ function Homepage({ navigation }) {
 
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Specialty</Text>
+
           <TouchableOpacity
             onPress={() => navigation.navigate("AppointmentList")}
           >
@@ -198,9 +330,9 @@ function Homepage({ navigation }) {
         <TouchableOpacity
           style={[
             styles.bottomButton,
-            activeButton === "Appointments" ? styles.activeButton : null,
+            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
           ]}
-          onPress={() => handleButtonPress("Appointments")}
+          onPress={() => handleButtonPress1("AAppointmentpage")}
         >
           <Text style={styles.buttonText}>My Appointments</Text>
         </TouchableOpacity>
@@ -227,23 +359,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  contentContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   marg: {
     marginTop: 200,
   },
-  input: {
-    width: windowWidth * 0.7,
-    height: 50,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-  },
+
   titleContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -376,6 +496,43 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,
+  },
+  suggestionList: {
+    position: "absolute",
+    top: "70%",
+    left: 0,
+    right: 0,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 0,
+    backgroundColor: "#fff",
+    zIndex: 1,
+    borderTopWidth: 0,
+  },
+  suggestionItem: {
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    zIndex: 2,
+  },
+  inputContainer: {
+    width: windowWidth * 0.7,
+    position: "relative",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginBottom: 10,
+    backgroundColor: "#fff",
   },
 });
 

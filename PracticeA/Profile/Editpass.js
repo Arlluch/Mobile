@@ -13,26 +13,47 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-function Cnp({ navigation }) {
-  const [password, setPassword] = useState("");
+function Editpass({ navigation }) {
+  const [activeButton, setActiveButton] = useState("Home");
+  const [activeButton1, setActiveButton1] = useState("AAppointmentpage");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordVisible1, setPasswordVisible1] = useState(false);
+  const handleButtonPress = (buttonName) => {
+    setActiveButton(buttonName);
+    if (buttonName === "Home") {
+      navigation.navigate("homepage");
+    }
+  };
+  const handleButtonPress1 = (buttonName1) => {
+    setActiveButton1(buttonName1);
+    if (buttonName1 === "AAppointmentpage") {
+      navigation.navigate("AAppointmentpage");
+    }
+  };
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
   const togglePasswordVisibility1 = () => {
     setPasswordVisible1(!passwordVisible1);
   };
+
   const handleVerify = () => {
-    if (password.trim() === "" || confirmPassword.trim() === "") {
-      alert("Please enter both passwords");
+    if (
+      currentPassword.trim() === "" ||
+      newPassword.trim() === "" ||
+      confirmPassword.trim() === ""
+    ) {
+      alert("Please enter all passwords");
       return;
     }
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
+    if (newPassword !== confirmPassword) {
+      alert("New password and confirm password do not match");
       setPasswordMatchError(true);
       return;
     }
@@ -43,19 +64,22 @@ function Cnp({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Text style={styles.logintext}>Create New Password</Text>
+        <Text style={styles.logintext}>
+          At least 8 characters with uppercase and lowercase letter
+        </Text>
         <View style={styles.formContainer}>
+          <Text style={styles.text}>Current Password</Text>
           <View style={styles.passwordInputContainer}>
             <TextInput
               style={[
                 styles.passwordInput,
                 passwordMatchError && styles.errorInput,
               ]}
-              placeholder="New Password"
+              placeholder="Current Password"
               placeholderTextColor="#888"
               secureTextEntry={!passwordVisible}
-              value={password}
-              onChangeText={(text) => setPassword(text)}
+              value={currentPassword}
+              onChangeText={(text) => setCurrentPassword(text)}
             />
             <TouchableOpacity
               style={styles.eyePasswordButton}
@@ -67,7 +91,30 @@ function Cnp({ navigation }) {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.text}>Must be at least 8 characters</Text>
+          <Text style={styles.text}>New Password</Text>
+          <View style={styles.passwordInputContainer}>
+            <TextInput
+              style={[
+                styles.passwordInput,
+                passwordMatchError && styles.errorInput,
+              ]}
+              placeholder="New Password"
+              placeholderTextColor="#888"
+              secureTextEntry={!passwordVisible1}
+              value={newPassword}
+              onChangeText={(text) => setNewPassword(text)}
+            />
+            <TouchableOpacity
+              style={styles.eyePasswordButton}
+              onPress={togglePasswordVisibility1}
+            >
+              <FontAwesomeIcon
+                icon={passwordVisible1 ? faEyeSlash : faEye}
+                style={styles.eyePasswordIcon}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.text}>Confirm Password</Text>
           <View style={styles.passwordInputContainer}>
             <TextInput
               style={[
@@ -90,27 +137,47 @@ function Cnp({ navigation }) {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.text}>Both password must match</Text>
           {passwordMatchError && (
-            <Text style={styles.errorText}>Passwords do not match</Text>
+            <Text style={styles.errorText}>
+              New password and confirm password do not match
+            </Text>
           )}
         </View>
       </View>
-      {/* Card box at the bottom */}
+
       <View style={styles.cardContainer}>
         <View style={styles.card}>
           <TouchableOpacity
             style={styles.verifyButtonContainer}
             onPress={handleVerify}
           >
-            <Text style={styles.verifyButton}>Send OTP</Text>
+            <Text style={styles.verifyButton}>Save Changes</Text>
           </TouchableOpacity>
         </View>
+      </View>
+      <View style={styles.bottomButtonsContainer}>
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            activeButton === "Home" ? styles.activeButton : null,
+          ]}
+          onPress={() => handleButtonPress("Home")}
+        >
+          <Text style={styles.buttonText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
+          ]}
+          onPress={() => handleButtonPress1("AAppointmentpage")}
+        >
+          <Text style={styles.buttonText}>My Appointments</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -119,18 +186,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: windowHeight * 0.1,
-    marginBottom: windowHeight * 0.1,
+
+    marginBottom: windowHeight * 0.4,
   },
   logintext: {
-    fontSize: windowWidth * 0.05,
+    fontSize: windowWidth * 0.03,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: windowHeight * 0.05,
   },
   text: {
-    fontSize: windowWidth * 0.03,
+    fontSize: windowWidth * 0.05,
     textAlign: "left",
+    fontWeight: "bold",
     marginBottom: windowHeight * 0.02,
   },
   formContainer: {
@@ -169,7 +237,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: windowWidth,
-    height: windowHeight * 0.13,
+    height: windowHeight * 0.22,
     backgroundColor: "#fff",
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
@@ -195,7 +263,7 @@ const styles = StyleSheet.create({
   },
   verifyButtonContainer: {
     position: "absolute",
-    bottom: windowHeight * 0.04,
+    bottom: windowHeight * 0.125,
     width: windowWidth,
     alignItems: "center",
     justifyContent: "center",
@@ -223,13 +291,39 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  errorInput: {
-    borderColor: "red",
+
+  bottomButtonsContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 80,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderTopWidth: 3,
+    borderTopColor: "rgba(0, 0, 0, 0.2)",
   },
-  errorText: {
-    color: "red",
-    marginBottom: 10,
+  bottomButton: {
+    backgroundColor: "#fff",
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    marginRight: 10,
+    marginLeft: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+  },
+  activeButton: {
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
   },
 });
 
-export default Cnp;
+export default Editpass;
