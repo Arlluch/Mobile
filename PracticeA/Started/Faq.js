@@ -74,7 +74,10 @@ const AAppointmentpage = () => {
             styles.filterButton,
             { backgroundColor: !activeButton ? "#FFB200" : "#E7EDFD" },
           ]}
-          onPress={() => setActiveButton(false)}
+          onPress={() => {
+            setActiveButton(false);
+            navigation.navigate("Reportuser");
+          }}
         >
           <Text style={styles.filterButtonText}>Contact Us</Text>
         </TouchableOpacity>
@@ -182,7 +185,12 @@ const AAppointmentpage = () => {
       </ScrollView>
 
       <FAQScreen />
-      <TouchableOpacity style={styles.AppointmentButton}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Report");
+        }}
+        style={styles.AppointmentButton}
+      >
         <Text style={[styles.buttonText, { color: "#FFF" }]}>Message Us</Text>
       </TouchableOpacity>
       <View style={styles.bottomButtonsContainer}>

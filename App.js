@@ -96,7 +96,7 @@ const CustomDrawerContent = ({ navigation }) => {
             style={{
               marginLeft: 20,
               fontWeight: "bold",
-              fontSize: 18,
+              fontSize: 24,
               color: "white",
             }}
           >
@@ -116,7 +116,7 @@ const CustomDrawerContent = ({ navigation }) => {
             style={{ width: 100, height: 100, borderRadius: 50 }}
           />
           <View style={{ marginLeft: 20 }}>
-            <Text style={{ fontWeight: "bold", color: "white" }}>
+            <Text style={{ fontWeight: "bold", fontSize: 20, color: "white" }}>
               Dr. John Doe
             </Text>
             <Text style={{ color: "white" }}>(123) 456-7890</Text>
@@ -129,7 +129,7 @@ const CustomDrawerContent = ({ navigation }) => {
           marginLeft: 10,
           marginRight: 10,
           marginTop: 20,
-          marginBottom: 25,
+          marginBottom: 10,
           flexDirection: "row",
           alignItems: "center",
           backgroundColor: "#ffb200",
@@ -144,6 +144,7 @@ const CustomDrawerContent = ({ navigation }) => {
       >
         <Text
           style={{
+            fontSize: 20,
             marginLeft: 20,
             color: "white",
           }}
@@ -171,6 +172,7 @@ const CustomDrawerContent = ({ navigation }) => {
         <Text
           style={{
             marginLeft: 20,
+            fontSize: 20,
             color:
               navigation.state && navigation.state.index === 1
                 ? "#63b4ff"
@@ -193,7 +195,9 @@ const CustomDrawerContent = ({ navigation }) => {
           padding: 10,
         }}
       >
-        <Text style={{ marginLeft: 20, color: "white" }}>My Profile</Text>
+        <Text style={{ marginLeft: 20, fontSize: 20, color: "white" }}>
+          My Profile
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate("#")}
@@ -208,7 +212,9 @@ const CustomDrawerContent = ({ navigation }) => {
           padding: 10,
         }}
       >
-        <Text style={{ marginLeft: 20, color: "white" }}>About Us</Text>
+        <Text style={{ marginLeft: 20, fontSize: 20, color: "white" }}>
+          About Us
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate("Faq")}
@@ -223,7 +229,9 @@ const CustomDrawerContent = ({ navigation }) => {
           padding: 10,
         }}
       >
-        <Text style={{ marginLeft: 20, color: "white" }}>Feedback</Text>
+        <Text style={{ marginLeft: 20, fontSize: 20, color: "white" }}>
+          Feedback
+        </Text>
       </TouchableOpacity>
       <View
         style={{

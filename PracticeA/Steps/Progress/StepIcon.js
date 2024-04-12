@@ -9,17 +9,17 @@ class StepIcon extends Component {
     if (this.props.isActiveStep) {
       styles = {
         circleStyle: {
-          width: 40,
-          height: 40,
-          borderRadius: 20,
+          width: 30, // Adjusted size for the circle
+          height: 30, // Adjusted size for the circle
+          borderRadius: 15, // Adjusted border radius for the circle
           backgroundColor: this.props.activeStepIconColor,
           borderColor: this.props.activeStepIconBorderColor,
-          borderWidth: 5,
+          borderWidth: 3, // Adjusted border width for the circle
           bottom: 2,
         },
         circleText: {
           alignSelf: "center",
-          top: 20 / 3,
+          top: 5, // Adjusted position for the circle text
         },
         labelText: {
           textAlign: "center",
@@ -32,23 +32,23 @@ class StepIcon extends Component {
         },
         leftBar: {
           position: "absolute",
-          top: 40 / 2.22,
+          top: 30 / 2.22,
           left: 0,
-          right: 40 + 8,
+          right: 35 + 8,
           borderTopStyle: this.props.borderStyle,
           borderTopWidth: this.props.borderWidth,
           borderTopColor: this.props.completedProgressBarColor,
-          marginRight: 40 / 2 + 2,
+          marginRight: 30 / 2 + 2,
         },
         rightBar: {
           position: "absolute",
-          top: 40 / 2.22,
+          top: 30 / 2.22,
           right: 0,
-          left: 40 + 8,
+          left: 35 + 8,
           borderTopStyle: this.props.borderStyle,
           borderTopWidth: this.props.borderWidth,
           borderTopColor: this.props.progressBarColor,
-          marginLeft: 40 / 2 + 2,
+          marginLeft: 30 / 2 + 2,
         },
         stepNum: {
           color: this.props.activeStepNumColor,
@@ -57,14 +57,14 @@ class StepIcon extends Component {
     } else if (this.props.isCompletedStep) {
       styles = {
         circleStyle: {
-          width: 36,
-          height: 36,
-          borderRadius: 18,
+          width: 26, // Adjusted size for the circle
+          height: 26, // Adjusted size for the circle
+          borderRadius: 13, // Adjusted border radius for the circle
           backgroundColor: this.props.completedStepIconColor,
         },
         circleText: {
           alignSelf: "center",
-          top: 18 / 2,
+          top: 5, // Adjusted position for the circle text
         },
         labelText: {
           textAlign: "center",
@@ -78,23 +78,23 @@ class StepIcon extends Component {
         },
         leftBar: {
           position: "absolute",
-          top: 36 / 2,
+          top: 26 / 2,
           left: 0,
-          right: 36 + 8,
+          right: 35 + 8,
           borderTopStyle: this.props.borderStyle,
           borderTopWidth: this.props.borderWidth,
           borderTopColor: this.props.completedProgressBarColor,
-          marginRight: 36 / 2 + 4,
+          marginRight: 26 / 2 + 4,
         },
         rightBar: {
           position: "absolute",
-          top: 36 / 2,
+          top: 26 / 2,
           right: 0,
-          left: 36 + 8,
+          left: 35 + 8,
           borderTopStyle: this.props.borderStyle,
           borderTopWidth: this.props.borderWidth,
           borderTopColor: this.props.completedProgressBarColor,
-          marginLeft: 36 / 2 + 4,
+          marginLeft: 26 / 2 + 4,
         },
         stepNum: {
           color: this.props.completedStepNumColor,
@@ -103,14 +103,14 @@ class StepIcon extends Component {
     } else {
       styles = {
         circleStyle: {
-          width: 36,
-          height: 36,
-          borderRadius: 18,
+          width: 26, // Adjusted size for the circle
+          height: 26, // Adjusted size for the circle
+          borderRadius: 13, // Adjusted border radius for the circle
           backgroundColor: this.props.disabledStepIconColor,
         },
         circleText: {
           alignSelf: "center",
-          top: 18 / 2,
+          top: 5, // Adjusted position for the circle text
         },
         labelText: {
           textAlign: "center",
@@ -124,23 +124,23 @@ class StepIcon extends Component {
         },
         leftBar: {
           position: "absolute",
-          top: 36 / 2,
+          top: 26 / 2,
           left: 0,
-          right: 36 + 8,
+          right: 35 + 8,
           borderTopStyle: this.props.borderStyle,
           borderTopWidth: this.props.borderWidth,
           borderTopColor: this.props.progressBarColor,
-          marginRight: 36 / 2 + 4,
+          marginRight: 26 / 2 + 4,
         },
         rightBar: {
           position: "absolute",
-          top: 36 / 2,
+          top: 26 / 2,
           right: 0,
-          left: 36 + 8,
+          left: 35 + 8,
           borderTopStyle: this.props.borderStyle,
           borderTopWidth: this.props.borderWidth,
           borderTopColor: this.props.progressBarColor,
-          marginLeft: 36 / 2 + 4,
+          marginLeft: 26 / 2 + 4,
         },
         stepNum: {
           color: this.props.disabledStepNumColor,
@@ -149,11 +149,20 @@ class StepIcon extends Component {
     }
 
     return (
-      <View style={{ flexDirection: "column", alignItems: "center" }}>
+      <View
+        style={{
+          flexDirection: "column",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
         <View style={styles.circleStyle}>
           <Text style={styles.circleText}>
             {this.props.isCompletedStep ? (
-              <Text style={{ color: this.props.completedCheckColor }}>
+              <Text
+                style={{ color: this.props.completedCheckColor, fontSize: 12 }}
+              >
+                {" "}
                 &#10003;
               </Text>
             ) : (
@@ -203,7 +212,7 @@ StepIcon.propTypes = {
 StepIcon.defaultProps = {
   borderWidth: 1,
   borderStyle: "solid",
-  activeStepIconBorderColor: "white",
+  activeStepIconBorderColor: "#ebebe4",
 
   progressBarColor: "#ebebe4",
   completedProgressBarColor: "#FFB200",
@@ -213,7 +222,7 @@ StepIcon.defaultProps = {
   disabledStepIconColor: "#ebebe4",
 
   labelColor: "lightgray",
-  labelFontSize: 14,
+  labelFontSize: 10,
   activeLabelColor: "#FFB200",
   completedLabelColor: "lightgray",
 

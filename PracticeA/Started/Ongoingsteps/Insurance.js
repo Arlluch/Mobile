@@ -28,7 +28,7 @@ function insurance(props) {
           <Text style={styles.buttonText}>Private/Self-payers</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.emailButton}>
-          <Text style={styles.buttonText}>Governmental</Text>
+          <Text style={styles.buttonText}>Insurance Button</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
