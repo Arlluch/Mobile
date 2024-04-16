@@ -63,7 +63,9 @@ function Doctoroffice({ navigation }) {
       navigation.navigate("homepage");
     }
   };
-
+  const handleBoxPress = (item) => {
+    navigation.navigate("Docprofile");
+  };
   const handleButtonPress1 = (buttonName1) => {
     setActiveButton1(buttonName1);
     if (buttonName1 === "AAppointmentpage") {
@@ -117,41 +119,51 @@ function Doctoroffice({ navigation }) {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.cardsContainer}
         >
-          <View style={styles.card}>
-            <Image
-              source={require("../assets/Doctor.png")}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardName}>Dr. John Doe</Text>
-            <Text style={styles.cardSpecialization}>Cardiologist</Text>
-          </View>
-          <View style={styles.card}>
-            <Image
-              source={require("../assets/Doctor.png")}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardName}>Dr. John Doe</Text>
-            <Text style={styles.cardSpecialization}>Cardiologist</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleBoxPress(data[0])}>
+            <View style={styles.card}>
+              <Image
+                source={require("../assets/Doctor.png")}
+                style={styles.cardImage}
+              />
+              <Text style={styles.cardName}>Dr. John Doe</Text>
+              <Text style={styles.cardSpecialization}>Cardiologist</Text>
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.card}>
-            <Image
-              source={require("../assets/Doctor.png")}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardName}>Dr. Jane Smith</Text>
-            <Text style={styles.cardSpecialization}>Dermatologist</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleBoxPress(data[1])}>
+            <View style={styles.card}>
+              <Image
+                source={require("../assets/Doctor.png")}
+                style={styles.cardImage}
+              />
+              <Text style={styles.cardName}>Dr. John Doe</Text>
+              <Text style={styles.cardSpecialization}>Cardiologist</Text>
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.card}>
-            <Image
-              source={require("../assets/Doctor.png")}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardName}>Dr. Michael Brown</Text>
-            <Text style={styles.cardSpecialization}>Pediatrician</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleBoxPress(data[2])}>
+            <View style={styles.card}>
+              <Image
+                source={require("../assets/Doctor.png")}
+                style={styles.cardImage}
+              />
+              <Text style={styles.cardName}>Dr. Jane Smith</Text>
+              <Text style={styles.cardSpecialization}>Dermatologist</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleBoxPress(data[3])}>
+            <View style={styles.card}>
+              <Image
+                source={require("../assets/Doctor.png")}
+                style={styles.cardImage}
+              />
+              <Text style={styles.cardName}>Dr. Michael Brown</Text>
+              <Text style={styles.cardSpecialization}>Pediatrician</Text>
+            </View>
+          </TouchableOpacity>
         </ScrollView>
+
         <Text style={styles.titles}>Opening Hours</Text>
         <TouchableOpacity style={styles.hideButton} onPress={toggleVisibility}>
           <Text style={styles.hideButtonText}>
@@ -400,6 +412,7 @@ const styles = StyleSheet.create({
   contactText: {
     marginLeft: 10,
     fontSize: 16,
+    color: "#6B779A",
   },
   hideButton: {
     padding: 10,

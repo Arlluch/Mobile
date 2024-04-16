@@ -88,7 +88,7 @@ const Box = ({ color, image, text1 }) => (
   </View>
 );
 
-const Homepage = () => {
+const Symptoms = () => {
   const [activeButton, setActiveButton] = useState("Home");
   const navigation = useNavigation();
 
@@ -99,7 +99,7 @@ const Homepage = () => {
     }
   };
   const handleBoxPress = (item) => {
-    console.log("Box pressed:");
+    navigation.navigate("Alldoctors");
   };
   return (
     <View style={styles.container}>
@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: "bold",
   },
   boxContainer: {
     flexDirection: "row",
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    fontWeight: "semibold",
+
     textAlign: "center",
   },
   bottomButtonsContainer: {
@@ -257,4 +256,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Homepage;
+export default Symptoms;

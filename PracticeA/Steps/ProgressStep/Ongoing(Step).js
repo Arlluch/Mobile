@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import ProgSteps from "../Steps/Progress/progsteps";
 import ProgStep from "../Steps/Progress/progstep";
-import Insurance from "./Ongoingsteps/Insurance"; // Import the FAQScreen component here
-import Visit from "./Ongoingsteps/Visit";
-import Loginsignup from "./Ongoingsteps/Loginsignup";
+import Insurance from "../Steps/ProgressStep/Insurance";
+import Visit from "../Steps/ProgressStep/Visit";
+import Loginsignup from "../Steps/ProgressStep/Loginsignup";
+import FileList from "../Steps/ProgressStep/FileList";
 
 class Steps extends Component {
   static navigationOptions = {
@@ -45,7 +46,10 @@ class Steps extends Component {
             onNext={this.onNextStep}
             onPrevious={this.onPrevStep}
             scrollViewProps={this.defaultScrollViewProps}
-          />
+          >
+            <FileList />
+          </ProgStep>
+
           <ProgStep
             label="Schedule"
             onNext={this.onNextStep}
@@ -76,7 +80,7 @@ class Steps extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff", // Set the background color to white
+    backgroundColor: "#fff", 
   },
 });
 

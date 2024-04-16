@@ -22,8 +22,6 @@ import homepage from "./PracticeA/Home/homepage";
 import AppointmentList from "./PracticeA/Home/AppointmentList";
 import Symptoms from "./PracticeA/Home/Symptoms";
 import Alldoctors from "./PracticeA/Home/Alldoctors";
-import Ourdoctors from "./PracticeA/Home/Ourdoctors";
-import Docprofile from "./PracticeA/Home/Docprofile";
 import Sidebar from "./PracticeA/Home/sidebar";
 import Filter from "./PracticeA/Home/Filter";
 import Location from "./PracticeA/Home/Location";
@@ -42,9 +40,43 @@ export default function App() {
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{ headerTitle: "", headerShown: false }}
+          options={{ headerTitle: "", headerShown: true }}
         />
-
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Verify"
+          component={Verify}
+          options={{ headerTitle: "Activation" }}
+        />
+        <Stack.Screen
+          name="Filter"
+          component={Filter}
+          options={{ headerTitle: "Filter" }}
+        />
+        <Stack.Screen
+          name="Viewdoc"
+          component={Viewdoc}
+          options={{ headerTitle: "View" }}
+        />
+        <Stack.Screen
+          name="Viewdocarch"
+          component={Viewdocarch}
+          options={{ headerTitle: "View" }}
+        />
+        <Stack.Screen
+          name="Cancelschedule"
+          component={Cancelschedule}
+          options={{ headerTitle: "Cancel" }}
+        />
+        <Stack.Screen
+          name="Cancelsuccess"
+          component={Cancelsuccess}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="homepage"
           component={homepage}
@@ -63,29 +95,30 @@ export default function App() {
               height: 100,
             },
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("#")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
+              <>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("#")}
                   style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
+                    marginRight: 20,
+                    marginTop: 10,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                      marginLeft: 10,
+                    }}
+                    source={logoImage}
+                  />
+                </TouchableOpacity>
+              </>
             ),
           })}
         />
-
         <Stack.Screen
           name="AAppointmentpage"
           component={AAppointmentpage}
@@ -149,48 +182,6 @@ export default function App() {
               <>
                 <TouchableOpacity
                   onPress={() => navigation.navigate("#")}
-                  style={{
-                    marginRight: 20,
-                    marginTop: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                  <Image
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginLeft: 10,
-                    }}
-                    source={logoImage}
-                  />
-                </TouchableOpacity>
-              </>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name="Ourdoctors"
-          component={Ourdoctors}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.toggleDrawer()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faBars} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-            headerTitle: "All Doctors",
-            headerTransparent: false,
-            headerStyle: {
-              height: 100,
-            },
-            headerRight: () => (
-              <>
-                <TouchableOpacity
-                  onPress={() => console.log("Pressed")}
                   style={{
                     marginRight: 20,
                     marginTop: 10,
@@ -332,110 +323,6 @@ export default function App() {
           })}
         />
         <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          name="Filter"
-          component={Filter}
-          options={({ navigation }) => ({
-            headerTitle: "View",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name="Verify"
-          component={Verify}
-          options={({ navigation }) => ({
-            headerTitle: "Activation",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name="Docprofile"
-          component={Docprofile}
-          options={({ navigation }) => ({
-            headerTitle: "Doctor's Profile",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name="Viewdoc"
-          component={Viewdoc}
-          options={({ navigation }) => ({
-            headerTitle: "View",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-
-        <Stack.Screen
-          name="Viewdocarch"
-          component={Viewdocarch}
-          options={({ navigation }) => ({
-            headerTitle: "View",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-
-        <Stack.Screen
-          name="Cancelschedule"
-          component={Cancelschedule}
-          options={({ navigation }) => ({
-            headerTitle: "Cancel",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name="Cancelsuccess"
-          component={Cancelsuccess}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
           name="Verifysuccess"
           component={Verifysuccess}
           options={{ headerShown: false }}
@@ -450,93 +337,40 @@ export default function App() {
           component={Cnpsuccess}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="Fps1email"
           component={Fps1email}
-          options={({ navigation }) => ({
-            headerTitle: "Forgot password",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
+          options={{ headerTitle: "Forgot password" }}
         />
-
         <Stack.Screen
           name="Fps1sms"
           component={Fps1sms}
-          options={({ navigation }) => ({
-            headerTitle: "Forgot password",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
+          options={{ headerTitle: "Forgot password" }}
         />
         <Stack.Screen
           name="Fps1"
           component={Fps1}
-          options={({ navigation }) => ({
-            headerTitle: "Forgot password",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
+          options={{ headerTitle: "Forgot password" }}
         />
         <Stack.Screen
           name="Loginsms"
           component={Loginsms}
-          options={{ headerTitle: "", headerShown: false }}
+          options={{ headerTitle: "" }}
         />
         <Stack.Screen
           name="Verifylogin"
           component={Verifylogin}
-          options={{ headerTitle: "", headerShown: false }}
+          options={{ headerTitle: "" }}
         />
-
         <Stack.Screen
           name="VerifyFPemail"
           component={VerifyFPemail}
-          options={({ navigation }) => ({
-            headerTitle: "Forgot password",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
+          options={{ headerTitle: "Forgot password" }}
         />
         <Stack.Screen
           name="VerifyFPsms"
           component={VerifyFPsms}
-          options={({ navigation }) => ({
-            headerTitle: "Forgot password",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
+          options={{ headerTitle: "Forgot password" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

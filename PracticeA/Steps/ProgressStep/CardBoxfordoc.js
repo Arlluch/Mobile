@@ -12,7 +12,10 @@ const CardBox = ({
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={require("../assets/Doctor.png")} style={styles.image} />
+        <Image
+          source={require("../../assets/Doctor.png")}
+          style={styles.image}
+        />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.name}>{name}</Text>

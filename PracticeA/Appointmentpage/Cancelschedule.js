@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import CardBox from "./CardBoxforcancel";
 import { useNavigation } from "@react-navigation/native";
@@ -80,88 +82,96 @@ const Cancelschedule = () => {
   ];
 
   return (
-    <View style={styles.container}>
-      <View>
-        {doctorsData.map((doctor, index) => (
-          <CardBox
-            key={index}
-            name={doctor.name}
-            specialization={doctor.specialization}
-            language={doctor.language}
-            location={doctor.location}
-            type={doctor.type}
-            types={doctor.types}
-            schedule={doctor.schedule}
-          />
-        ))}
-      </View>
-      <View style={styles.contentContainer}>
-        <View style={styles.formContainer}>
-          <Text style={styles.inputTitles}>
-            Do you really want to cancel this appointment?
-          </Text>
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            containerStyle={styles.dropdownContainer}
-            style={styles.dropdown}
-            itemStyle={styles.dropdownItem}
-            textStyle={styles.dropdownText}
-            placeholder="Select Reason"
-            zIndex={1000}
-            onChangeItem={(item) => {
-              setValue(item.value);
-              if (item.value === "others") {
-                setOtherReason("");
-              }
-            }}
-          />
-          {value === "others" && (
-            <TextInput
-              style={styles.otherReasonInput}
-              placeholder="Enter Other Reason"
-              value={otherReason}
-              onChangeText={handleInputChange}
-              multiline
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -100}
+    >
+      <View style={styles.container}>
+        <View>
+          {doctorsData.map((doctor, index) => (
+            <CardBox
+              key={index}
+              name={doctor.name}
+              specialization={doctor.specialization}
+              language={doctor.language}
+              location={doctor.location}
+              type={doctor.type}
+              types={doctor.types}
+              schedule={doctor.schedule}
             />
-          )}
+          ))}
         </View>
-      </View>
-      <View style={styles.cardContainer}>
-        <View style={styles.card}>
+        <View style={styles.contentContainer}>
+          <View style={styles.formContainer}>
+            <Text style={styles.inputTitles}>
+              Do you really want to cancel this appointment?
+            </Text>
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              containerStyle={styles.dropdownContainer}
+              style={styles.dropdown}
+              itemStyle={styles.dropdownItem}
+              textStyle={styles.dropdownText}
+              placeholder="Select Reason"
+              zIndex={1000}
+              onChangeItem={(item) => {
+                setValue(item.value);
+                if (item.value === "others") {
+                  setOtherReason("");
+                }
+              }}
+            />
+            {value === "others" && (
+              <TextInput
+                style={[styles.otherReasonInput, { textAlignVertical: "top" }]} // Set textAlignVertical to "top"
+                placeholder="Enter Other Reason"
+                value={otherReason}
+                onChangeText={handleInputChange}
+                multiline
+              />
+            )}
+          </View>
+        </View>
+        <View style={styles.cardContainer}>
+          <View style={styles.card}>
+            <TouchableOpacity
+              onPress={handleVerify}
+              style={styles.verifyButtonContainer}
+            >
+              <Text style={styles.verifyButton}>Send Request</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.bottomButtonsContainer}>
           <TouchableOpacity
-            onPress={handleVerify}
-            style={styles.verifyButtonContainer}
+            style={[
+              styles.bottomButton,
+              activeButton === "Home" ? styles.activeButton : null,
+            ]}
+            onPress={() => handleButtonPress("Home")}
           >
-            <Text style={styles.verifyButton}>Send Request</Text>
+            <Text style={styles.buttonText}>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.bottomButton,
+              activeButton1 === "AAppointmentpage"
+                ? styles.activeButton1
+                : null,
+            ]}
+            onPress={() => handleButtonPress1("AAppointmentpage")}
+          >
+            <Text style={styles.buttonText}>My Appointments</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.bottomButtonsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton === "Home" ? styles.activeButton : null,
-          ]}
-          onPress={() => handleButtonPress("Home")}
-        >
-          <Text style={styles.buttonText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
-          ]}
-          onPress={() => handleButtonPress1("AAppointmentpage")}
-        >
-          <Text style={styles.buttonText}>My Appointments</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -220,6 +230,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fafafa",
     borderColor: "#ccc",
     width: "100%",
+    zIndex: 0,
   },
   dropdownItem: {
     justifyContent: "flex-start",
