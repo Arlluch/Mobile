@@ -1,0 +1,254 @@
+type Doctor @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  companyID: ID! @index(name: "byCompany")
+  lastName: String!
+  firstName: String!
+  experience: String
+  email: String
+  title: String
+  specialty: [String]
+  insurance: [String]
+  education: [AWSJSON]
+  languages: [String]
+  appointments: [Appointment] @manyToMany(relationName: "AppointmentDoctor")
+  doctorInfo: String
+  timeOffs: [TimeOff] @manyToMany(relationName: "TimeOffDoctor")
+  isSameHours: Boolean
+  openingHours: [OpeningHours] @manyToMany(relationName: "DoctorHours")
+  rooms: [Room] @manyToMany(relationName: "DoctorRoom")
+}
+
+type Room @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  number: String!
+  information: String!
+  doctors: [Doctor] @manyToMany(relationName: "DoctorRoom")
+  appointments: [Appointment] @manyToMany(relationName: "AppointmentRoom")
+  companyID: ID! @index(name: "byCompany")
+}
+
+type Appointment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  booker: [String]
+  insurance: [String]
+  privateDuration: String
+  governmentalDuration: String
+  OpeningHours: [OpeningHours] @manyToMany(relationName: "AppointmentHours")
+  isSameHours: Boolean
+  # openingHours: [OpeningHours] @manyToMany(relationName: "AppointmentHours")
+  minBookTime: AWSJSON
+  maxBookTime: AWSJSON
+  recallTime: String
+  sendNotification: Boolean
+  type: String!
+  directory: String
+  items: [AWSJSON]
+  companyID: ID @index(name: "byCompany")
+  rooms: [Room] @manyToMany(relationName: "AppointmentRoom")
+  doctors: [Doctor] @manyToMany(relationName: "AppointmentDoctor")
+}
+
+type TimeOff @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String!
+  timeSpan: String
+  startDate: String!
+  startTime: String
+  endDate: String!
+  endTime: String
+  companyID: ID! @index(name: "byCompany")
+  doctors: [Doctor] @manyToMany(relationName: "TimeOffDoctor")
+}
+
+type OpeningHours @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  day: String!
+  isActive: Boolean
+  times: [AWSJSON]
+  companyID: ID @index(name: "byCompany")
+  appointments: [Appointment] @manyToMany(relationName: "AppointmentHours")
+  doctors: [Doctor] @manyToMany(relationName: "DoctorHours")
+}
+
+type CallHours @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Monday: String
+  Tuesday: String
+  Wednesday: String
+  Thursday: String
+  Friday: String
+  Saturday: String
+  Sunday: String
+}
+
+type Campaign @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  ClientCustomers: ClientCustomers @hasOne
+  status: String
+  nrOfTries: Int
+  lastTried: AWSDateTime
+  CampaignHeader: CampaignHeader @hasOne
+}
+
+type Agent @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  company: Company @hasOne
+  name: String
+  language: String
+  phoneNrAssigned: AWSPhone
+}
+
+type Hints @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  status: [String]
+  insurance: [String]
+  message: String
+  companyID: ID @index(name: "byCompany")
+}
+
+type CampaignHeader @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  ClientAccounts: ClientAccounts @hasOne
+  Agent: Agent @hasOne
+  CallHours: CallHours @hasOne
+  startAt: AWSDateTime
+  durationWaitTillNextTry: AWSDateTime
+  maxNrOfTries: Int
+}
+
+type ClientCustomers @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  companyID: ID! @index
+  lastName: String
+  firstName: String
+  email: AWSEmail
+  phone: AWSPhone
+  emergencyContact: AWSPhone
+  birthdate: AWSDate
+  houseNo: String
+  street: String
+  postalCode: String
+  city: String
+  country: String
+  comment: String
+  image: String
+}
+
+type Calls @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  clientID: ID! @index(name: "byClientAccount")
+}
+
+type CallOutbound @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  ClientCustomers: ClientCustomers @hasOne
+  Campaign: Campaign @hasOne
+}
+
+type CallInbound @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  callerNo: AWSPhone
+  clientNo: AWSPhone
+  duration: Int
+  Agent: Agent @hasOne
+  startDT: AWSDateTime
+  endDT: AWSDateTime
+}
+
+type ClientAccounts @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  companyID: ID @index(name: "byCompany")
+  # lastName: String
+  # firstName: String
+  # email: String
+  # role: String
+  # phone: AWSPhone
+  # status: String
+  # specialization: [String]
+  # insurance: [String]
+  # isArchived: Boolean
+  # isAccepted: Boolean
+  houseNo: String
+  street: String
+  postalCode: Int
+  city: String
+  country: String
+  image: String
+  Calls: [Calls] @hasMany(indexName: "byClientAccount")
+  OneTimePasswords: [OneTimePasswords] @hasMany(indexName: "byClientAccount")
+  dateInvited: AWSDate
+}
+
+type Company @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  email: AWSEmail
+  phone: AWSPhone
+  link: AWSURL
+  street: String
+  houseNo: String
+  postalCode: Int
+  city: String
+  country: String
+  aboutUs: String
+  image: String
+  lastPaid: AWSDateTime
+  ClientCustomers: [ClientCustomers] @hasMany
+  ClientAccounts: [ClientAccounts] @hasMany(indexName: "byCompany", fields: ["id"])
+  CompanyPayments: [CompanyPayments] @hasMany(indexName: "byCompany", fields: ["id"])
+  WeeklyHours: [OpeningHours] @hasMany(indexName: "byCompany", fields: ["id"])
+  Appointments: [Appointment] @hasMany(indexName: "byCompany", fields: ["id"])
+  Hints: [Hints] @hasMany(indexName: "byCompany", fields: ["id"])
+  Rooms: [Room] @hasMany(indexName: "byCompany", fields: ["id"])
+  Doctors: [Doctor] @hasMany(indexName: "byCompany", fields: ["id"])
+}
+
+type CompanyPayments @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  companyID: ID! @index(name: "byCompany")
+  type: String
+  amount: Float
+  referenceID: String
+}
+
+type Subscriptions @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  startedCall: Int
+  minuteCalls: Int
+  extraCallCost: Float
+  monthlyCost: Float
+  yearlyCost: Float
+  monthlyYearlySalePercent: Int
+}
+
+type Telemetry @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Company: Company @hasOne
+  Subscriptions: Subscriptions @hasOne
+  ClientAccounts: ClientAccounts @hasOne
+  Campaign: Campaign @hasOne
+  month: Int
+  startedMins: Int
+  startedCalls: Int
+}
+
+type TargetGroupHeader @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  ClientAccounts: ClientAccounts @hasOne
+}
+
+type TargetGroup @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  TargetGroupHeader: TargetGroupHeader @hasOne
+  ClientCustomers: ClientCustomers @hasOne
+}
+
+type OneTimePasswords @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  clientID: ID! @index(name: "byClientAccount")
+  otp: String
+  ipAddr: AWSIPAddress
+  expiry: AWSDateTime
+}

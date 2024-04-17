@@ -5,6 +5,9 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
+import { Amplify } from "aws-amplify";
+import amplifyconfig from "./src/amplifyconfiguration.json";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { TouchableOpacity, Image, Text, StyleSheet, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -58,7 +61,7 @@ import Reportuser from "./PracticeA/Profile/Reportuser";
 
 import logoImage from "./PracticeA/assets/Logo.png";
 import doctorsImage from "./PracticeA/assets/Doctor.png";
-
+Amplify.configure(amplifyconfig);
 const Drawer = createDrawerNavigator();
 const Stack = createDrawerNavigator();
 const CustomDrawerContent = ({ navigation }) => {
