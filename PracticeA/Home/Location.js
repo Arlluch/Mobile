@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    paddingHorizontal: 20,
+
     paddingTop: 20,
   },
   title: {
@@ -193,20 +193,15 @@ const styles = StyleSheet.create({
   card: {
     width: windowWidth - 40,
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
+    borderRadius: 15,
     padding: 20,
     marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
     flexDirection: "row",
     alignItems: "center",
+    borderColor: "#ccc",
+    borderWidth: 1,
   },
+
   image: {
     width: 50,
     height: 50,
@@ -273,8 +268,9 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   inputContainer: {
-    width: windowWidth * 0.9, // Adjusted to 90% of window width
+    width: windowWidth * 0.9,
     position: "relative",
+    marginLeft: 20,
   },
   input: {
     borderWidth: 1,

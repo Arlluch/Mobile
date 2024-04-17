@@ -139,6 +139,10 @@ function Docprofile({ navigation }) {
             Baguio General Hospital and Medical Center , 2019
           </Text>
         </View>
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Impressum and Datenschutz</Text>
+        </View>
       </ScrollView>
 
       <View style={styles.bottomButtonsContainer}>
@@ -170,6 +174,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
   scrollContainer: {
     flexGrow: 1,
@@ -293,7 +299,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
   },
   subtitle: {
     fontSize: 16,
@@ -303,7 +308,6 @@ const styles = StyleSheet.create({
   subtitles: {
     fontSize: 16,
     color: "#333",
-    fontWeight: "bold",
   },
   hideButton: {
     padding: 10,
@@ -342,6 +346,21 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontWeight: "bold",
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    width: "100%",
+    borderTopColor: "#ccc",
+    backgroundColor: "#F3F3F3",
+  },
+  footerText: {
+    fontSize: 10,
+    fontWeight: "bold",
+    color: "black",
   },
 });
 

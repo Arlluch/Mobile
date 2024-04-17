@@ -8,8 +8,8 @@ import {
   Image,
   TextInput,
   Platform,
-  ScrollView,
   KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -121,7 +121,7 @@ function Newschedule({ navigation }) {
             />
             {value === "others" && (
               <TextInput
-                style={styles.otherReasonInput}
+                style={[styles.otherReasonInput, { textAlignVertical: "top" }]} // Set textAlignVertical to "top"
                 placeholder="Enter Other Reason"
                 value={otherReason}
                 onChangeText={handleInputChange}
@@ -141,29 +141,27 @@ function Newschedule({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.bottomButtonsContainer}>
-          <TouchableOpacity
-            style={[
-              styles.bottomButton,
-              activeButton === "Home" ? styles.activeButton : null,
-            ]}
-            onPress={() => handleButtonPress("Home")}
-          >
-            <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.bottomButton,
-              activeButton1 === "AAppointmentpage"
-                ? styles.activeButton1
-                : null,
-            ]}
-            onPress={() => handleButtonPress1("AAppointmentpage")}
-          >
-            <Text style={styles.buttonText}>My Appointments</Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
+      <View style={styles.bottomButtonsContainer}>
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            activeButton === "Home" ? styles.activeButton : null,
+          ]}
+          onPress={() => handleButtonPress("Home")}
+        >
+          <Text style={styles.buttonText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
+          ]}
+          onPress={() => handleButtonPress1("AAppointmentpage")}
+        >
+          <Text style={styles.buttonText}>My Appointments</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 }

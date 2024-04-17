@@ -63,7 +63,9 @@ function Doctoroffice({ navigation }) {
       navigation.navigate("homepage");
     }
   };
-
+  const handleBoxPress = (item) => {
+    navigation.navigate("Docprofile");
+  };
   const handleButtonPress1 = (buttonName1) => {
     setActiveButton1(buttonName1);
     if (buttonName1 === "AAppointmentpage") {
@@ -117,41 +119,51 @@ function Doctoroffice({ navigation }) {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.cardsContainer}
         >
-          <View style={styles.card}>
-            <Image
-              source={require("../assets/Doctor.png")}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardName}>Dr. John Doe</Text>
-            <Text style={styles.cardSpecialization}>Cardiologist</Text>
-          </View>
-          <View style={styles.card}>
-            <Image
-              source={require("../assets/Doctor.png")}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardName}>Dr. John Doe</Text>
-            <Text style={styles.cardSpecialization}>Cardiologist</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleBoxPress(data[0])}>
+            <View style={styles.card}>
+              <Image
+                source={require("../assets/Doctor.png")}
+                style={styles.cardImage}
+              />
+              <Text style={styles.cardName}>Dr. John Doe</Text>
+              <Text style={styles.cardSpecialization}>Cardiologist</Text>
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.card}>
-            <Image
-              source={require("../assets/Doctor.png")}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardName}>Dr. Jane Smith</Text>
-            <Text style={styles.cardSpecialization}>Dermatologist</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleBoxPress(data[1])}>
+            <View style={styles.card}>
+              <Image
+                source={require("../assets/Doctor.png")}
+                style={styles.cardImage}
+              />
+              <Text style={styles.cardName}>Dr. John Doe</Text>
+              <Text style={styles.cardSpecialization}>Cardiologist</Text>
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.card}>
-            <Image
-              source={require("../assets/Doctor.png")}
-              style={styles.cardImage}
-            />
-            <Text style={styles.cardName}>Dr. Michael Brown</Text>
-            <Text style={styles.cardSpecialization}>Pediatrician</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleBoxPress(data[2])}>
+            <View style={styles.card}>
+              <Image
+                source={require("../assets/Doctor.png")}
+                style={styles.cardImage}
+              />
+              <Text style={styles.cardName}>Dr. Jane Smith</Text>
+              <Text style={styles.cardSpecialization}>Dermatologist</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleBoxPress(data[3])}>
+            <View style={styles.card}>
+              <Image
+                source={require("../assets/Doctor.png")}
+                style={styles.cardImage}
+              />
+              <Text style={styles.cardName}>Dr. Michael Brown</Text>
+              <Text style={styles.cardSpecialization}>Pediatrician</Text>
+            </View>
+          </TouchableOpacity>
         </ScrollView>
+
         <Text style={styles.titles}>Opening Hours</Text>
         <TouchableOpacity style={styles.hideButton} onPress={toggleVisibility}>
           <Text style={styles.hideButtonText}>
@@ -186,6 +198,10 @@ function Doctoroffice({ navigation }) {
             <MaterialIcons name="email" size={24} color="black" />
             <Text style={styles.contactText}>Email of the doctor’s office</Text>
           </View>
+        </View>
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Impressum and Datenschutz</Text>
         </View>
       </ScrollView>
 
@@ -336,7 +352,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+
     marginBottom: 20,
     marginTop: 20,
   },
@@ -345,7 +361,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 20,
     marginLeft: 20,
-    fontWeight: "600",
   },
   subtitle: {
     fontSize: 16,
@@ -400,6 +415,7 @@ const styles = StyleSheet.create({
   contactText: {
     marginLeft: 10,
     fontSize: 16,
+    color: "#6B779A",
   },
   hideButton: {
     padding: 10,
@@ -440,6 +456,20 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontWeight: "bold",
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#ccc",
+    backgroundColor: "#F3F3F3",
+  },
+  footerText: {
+    fontSize: 10,
+    fontWeight: "bold",
+    color: "black",
   },
 });
 

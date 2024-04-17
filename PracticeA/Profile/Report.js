@@ -7,9 +7,8 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  ImageBackground,
-  Platform,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -55,7 +54,7 @@ function Report({ navigation }) {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : null}
+      behavior={Platform.OS === "ios" ? "height" : null}
     >
       <View style={styles.container}>
         <DropDownPicker
@@ -75,56 +74,54 @@ function Report({ navigation }) {
             setOpen(false);
           }}
         />
-        <TouchableOpacity style={styles.addButton} onPress={() => {}}>
-          <Icon name="add-a-photo" size={30} color="#FFB200" />
-          <Text style={styles.addPhotoText}>Add Photo</Text>
-        </TouchableOpacity>
-
         <View style={styles.addPhotoContainer}>
+          <TouchableOpacity style={styles.addButton} onPress={() => {}}>
+            <Icon name="add-a-photo" size={30} color="#FFB200" />
+            <Text style={styles.addPhotoText}>Add Photo</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.addPhotoContainerr}>
           <Text style={styles.addPhotoTexts}>
             Minimum of 1 photo with total size up to 5 mb
           </Text>
           <TextInput
-            style={styles.commentsInput}
+            style={[styles.commentsInput, { textAlignVertical: "top" }]}
             placeholder="Comments"
             multiline
             numberOfLines={4}
             placeholderTextColor="#ccc"
           />
         </View>
-
-        <View style={styles.cardContainer}>
-          <View style={styles.card}>
-            <TouchableOpacity
-              onPress={handleVerify}
-              style={styles.verifyButtonContainer}
-            >
-              <Text style={styles.verifyButton}>Send</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.bottomButtonsContainer}>
+      </View>
+      <View style={styles.cardContainer}>
+        <View style={styles.card}>
           <TouchableOpacity
-            style={[
-              styles.bottomButton,
-              activeButton === "Home" ? styles.activeButton : null,
-            ]}
-            onPress={() => handleButtonPress("Home")}
+            onPress={handleVerify}
+            style={styles.verifyButtonContainer}
           >
-            <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.bottomButton,
-              activeButton1 === "AAppointmentpage"
-                ? styles.activeButton1
-                : null,
-            ]}
-            onPress={() => handleButtonPress1("AAppointmentpage")}
-          >
-            <Text style={styles.buttonText}>My Appointments</Text>
+            <Text style={styles.verifyButton}>Send</Text>
           </TouchableOpacity>
         </View>
+      </View>
+      <View style={styles.bottomButtonsContainer}>
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            activeButton === "Home" ? styles.activeButton : null,
+          ]}
+          onPress={() => handleButtonPress("Home")}
+        >
+          <Text style={styles.buttonText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
+          ]}
+          onPress={() => handleButtonPress1("AAppointmentpage")}
+        >
+          <Text style={styles.buttonText}>My Appointments</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -151,9 +148,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
-    position: "absolute",
-    bottom: windowHeight * 0.75 + 10,
-    left: 25,
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
@@ -170,7 +164,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   addPhotoTexts: {
-    bottom: windowHeight * 0.065,
     fontSize: 16,
     color: "#ccc",
     right: 25,
@@ -272,7 +265,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   addPhotoContainer: {
-    marginTop: 150,
+    marginTop: 20,
+    marginLeft: 25,
+    marginBottom: 20,
+    alignItems: "flex-start",
+  },
+  addPhotoContainerr: {
+    marginTop: 0,
     marginLeft: 20,
     justifyContent: "center",
     alignItems: "center",

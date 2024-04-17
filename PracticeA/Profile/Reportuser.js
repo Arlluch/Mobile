@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  ImageBackground,
-  Platform,
   KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import Icon from "react-native-vector-icons/MaterialIcons"; // Import Icon from react-native-vector-icons
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -23,6 +23,7 @@ function Reportuser({ navigation }) {
   const [value, setValue] = useState(null);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
 
   const items = [
     { label: "What went wrong?", value: "What went wrong?" },
@@ -43,12 +44,14 @@ function Reportuser({ navigation }) {
       navigation.navigate("homepage");
     }
   };
+
   const handleButtonPress1 = (buttonName1) => {
     setActiveButton1(buttonName1);
     if (buttonName1 === "AAppointmentpage") {
       navigation.navigate("AAppointmentpage");
     }
   };
+
   const handleVerify = () => {
     navigation.navigate("homepage");
   };
@@ -58,103 +61,96 @@ function Reportuser({ navigation }) {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
-      <View style={styles.container}>
-        <TextInput
-          style={styles.emailInput}
-          placeholder="Email"
-          onChangeText={setEmail}
-          value={email}
-          placeholderTextColor="#ccc"
-        />
-        <DropDownPicker
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          containerStyle={styles.dropdownContainer}
-          style={styles.dropdown}
-          itemStyle={styles.dropdownItem}
-          textStyle={styles.dropdownText}
-          placeholder="Select Concern"
-          zIndex={1000}
-          onChangeItem={(item) => {
-            setValue(item.value);
-            setOpen(false);
-          }}
-        />
-        <TouchableOpacity style={styles.addButton} onPress={() => {}}>
-          <Icon name="add-a-photo" size={30} color="#FFB200" />
-          <Text style={styles.addPhotoText}>Add Photo</Text>
-        </TouchableOpacity>
-        <View style={styles.addPhotoContainer}>
-          <Text style={styles.addPhotoTexts}>
-            Minimum of 1 photo with total size up to 5 mb
-          </Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.container}>
           <TextInput
-            style={styles.commentsInput}
-            placeholder="Comments"
-            multiline
-            numberOfLines={4}
-            placeholderTextColor="#ccc"
+            style={styles.emailInput}
+            placeholder="Enter your email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
-        </View>
-
-        <View style={styles.cardContainer}>
-          <View style={styles.card}>
-            <TouchableOpacity
-              onPress={handleVerify}
-              style={styles.verifyButtonContainer}
-            >
-              <Text style={styles.verifyButton}>Send</Text>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            containerStyle={styles.dropdownContainer}
+            style={styles.dropdown}
+            itemStyle={styles.dropdownItem}
+            textStyle={styles.dropdownText}
+            placeholder="Select Concern"
+            zIndex={1000}
+            onChangeItem={(item) => {
+              setValue(item.value);
+              setOpen(false);
+            }}
+          />
+          <View style={styles.addPhotoContainer}>
+            <TouchableOpacity style={styles.addButton} onPress={() => {}}>
+              <Icon name="add-a-photo" size={30} color="#FFB200" />
+              <Text style={styles.addPhotoText}>Add Photo</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.addPhotoContainerr}>
+            <Text style={styles.addPhotoTexts}>
+              Minimum of 1 photo with total size up to 5 mb
+            </Text>
+            <TextInput
+              style={[styles.commentsInput, { textAlignVertical: "top" }]}
+              placeholder="Comments"
+              multiline
+              value={comment}
+              onChangeText={(text) => setComment(text)}
+              placeholderTextColor="#ccc"
+            />
+          </View>
         </View>
-        <View style={styles.bottomButtonsContainer}>
+      </ScrollView>
+      <View style={styles.cardContainer}>
+        <View style={styles.card}>
           <TouchableOpacity
-            style={[
-              styles.bottomButton,
-              activeButton === "Home" ? styles.activeButton : null,
-            ]}
-            onPress={() => handleButtonPress("Home")}
+            onPress={handleVerify}
+            style={styles.verifyButtonContainer}
           >
-            <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.bottomButton,
-              activeButton1 === "AAppointmentpage"
-                ? styles.activeButton1
-                : null,
-            ]}
-            onPress={() => handleButtonPress1("AAppointmentpage")}
-          >
-            <Text style={styles.buttonText}>My Appointments</Text>
+            <Text style={styles.verifyButton}>Send</Text>
           </TouchableOpacity>
         </View>
+      </View>
+      <View style={styles.bottomButtonsContainer}>
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            activeButton === "Home" ? styles.activeButton : null,
+          ]}
+          onPress={() => handleButtonPress("Home")}
+        >
+          <Text style={styles.buttonText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
+          ]}
+          onPress={() => handleButtonPress1("AAppointmentpage")}
+        >
+          <Text style={styles.buttonText}>My Appointments</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
+  scrollContainer: {
+    flexGrow: 1,
   },
-  emailInput: {
+  container: {
+    flexGrow: 1,
     backgroundColor: "#fff",
-    borderRadius: 10,
-    marginTop: 20,
-    padding: 10,
-    width: windowWidth - 40,
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    marginLeft: 25,
-    marginRight: 35,
-    justifyContent: "center",
-    alignItems: "center",
+    paddingBottom: 150, // Adjust this value based on your needs
   },
   dropdownContainer: {
     marginTop: 20,
@@ -163,7 +159,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     left: 5,
-    borderColor: "#ccc",
   },
   dropdown: {
     borderColor: "#ccc",
@@ -173,9 +168,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
-    position: "absolute",
-    bottom: windowHeight * 0.65 + 10,
-    left: 25,
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
@@ -192,7 +184,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   addPhotoTexts: {
-    bottom: windowHeight * 0.065,
     fontSize: 16,
     color: "#ccc",
     right: 25,
@@ -294,7 +285,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   addPhotoContainer: {
-    marginTop: 150,
+    marginTop: 20,
+    marginLeft: 25,
+    marginBottom: 20,
+    alignItems: "flex-start",
+  },
+  addPhotoContainerr: {
+    marginTop: 0,
     marginLeft: 20,
     justifyContent: "center",
     alignItems: "center",
@@ -312,6 +309,17 @@ const styles = StyleSheet.create({
     marginRight: 35,
     justifyContent: "center",
     alignItems: "center",
+  },
+  emailInput: {
+    marginTop: 20,
+    marginLeft: 25,
+    marginBottom: 10,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 10,
+    width: "90%",
+    borderColor: "#ccc",
+    borderWidth: 1,
   },
 });
 

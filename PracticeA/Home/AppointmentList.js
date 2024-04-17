@@ -12,22 +12,16 @@ import { useNavigation } from "@react-navigation/native";
 
 const windowWidth = Dimensions.get("window").width;
 
-const DATA = [
-  {
-    id: "1",
-    color: "#F7F8FA",
-    image: require("../assets/dna.png"),
-    text1: "Genetics",
-    text2: "2,029 Doctors",
-  },
-  {
-    id: "2",
-    color: "#F7F8FA",
-    image: require("../assets/neurology.png"),
-    text1: "Neurology",
-    text2: "2,029 Doctors",
-  },
-];
+const DATA = Array.from({ length: 8 }, (_, index) => ({
+  id: `${index + 1}`,
+  color: "#F7F8FA",
+  image:
+    index % 3 === 0
+      ? require("../assets/dna.png")
+      : require("../assets/neurology.png"),
+  text1: index % 3 === 0 ? "Genetics" : "Neurology",
+  text2: "2,029 Doctors",
+}));
 
 const Box = ({ color, image, text1, text2 }) => (
   <View style={[styles.box, { backgroundColor: color }]}>
@@ -71,23 +65,21 @@ const AppointmentList = () => {
           <Text style={styles.text}>our specialized doctors are below</Text>
         </View>
 
-        {[...Array(5)].map((_, index) => (
-          <View key={index} style={styles.boxContainer}>
-            {DATA.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                onPress={() => handleBoxPress(item)}
-              >
-                <Box
-                  color={item.color}
-                  image={item.image}
-                  text1={item.text1}
-                  text2={item.text2}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-        ))}
+        <View style={styles.boxContainer}>
+          {DATA.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => handleBoxPress(item)}
+            >
+              <Box
+                color={item.color}
+                image={item.image}
+                text1={item.text1}
+                text2={item.text2}
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
       </ScrollView>
 
       <View style={styles.bottomButtonsContainer}>
@@ -122,15 +114,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   titleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     paddingHorizontal: 10,
     marginBottom: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   scrollContainer: {
-    flexGrow: 1,
     paddingBottom: 80,
   },
   title: {
@@ -140,14 +129,14 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     flexDirection: "row",
-    paddingHorizontal: 10,
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   box: {
-    width: windowWidth / 2.2 - 10,
+    width: windowWidth / 2.2 - 20,
     height: 220,
     borderRadius: 20,
-    marginHorizontal: 5,
-    marginBottom: 10,
+    margin: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -172,7 +161,7 @@ const styles = StyleSheet.create({
   },
   textt: {
     fontSize: 10,
-    fontWeight: "thin",
+    fontWeight: "200",
     textAlign: "center",
   },
   bottomButtonsContainer: {
@@ -186,10 +175,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     borderTopWidth: 3,
-
     borderTopColor: "rgba(0, 0, 0, 0.2)",
   },
-
   bottomButton: {
     backgroundColor: "#fff",
     height: 50,
@@ -197,10 +184,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-    marginRight: 10,
-    marginLeft: 10,
+    marginHorizontal: 10,
   },
-
   buttonText: {
     fontSize: 16,
   },

@@ -8,17 +8,15 @@ import {
   TextInput,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const FolderListItem = ({ name, isFolder, itemsCount, onPress }) => {
   const icon = isFolder
-    ? require("../assets/Folder.png")
-    : require("../assets/File.png");
+    ? require("../../assets/Folder.png")
+    : require("../../assets/File.png");
 
   return (
-    <TouchableOpacity
-      onPress={isFolder ? () => onPress(name) : null}
-      style={styles.folderContainer}
-    >
+    <TouchableOpacity onPress={onPress} style={styles.folderContainer}>
       <View style={styles.card}>
         <Image source={icon} style={styles.icon} />
         <View style={styles.textContainer}>
@@ -47,9 +45,10 @@ const FolderList = () => {
 
   const [currentFolder, setCurrentFolder] = useState(null);
   const [searchVisible, setSearchVisible] = useState(false);
+  const navigation = useNavigation();
 
-  const handlePress = (name) => {
-    setCurrentFolder(name);
+  const handlePress = (fileName) => {
+    navigation.navigate("Selectdoc", { fileName });
   };
 
   const handleBackButtonPress = () => {
@@ -92,7 +91,6 @@ const FolderList = () => {
           onChangeText={(text) => console.log(text)}
         />
       )}
-
       {currentFolder
         ? folders
             .find((folder) => folder.name === currentFolder)
@@ -101,7 +99,7 @@ const FolderList = () => {
                 key={index}
                 name={file}
                 isFolder={false}
-                onPress={null}
+                onPress={() => handlePress(file)}
               />
             ))
         : folders.map((folder, index) => (
@@ -110,7 +108,7 @@ const FolderList = () => {
               name={folder.name}
               itemsCount={folder.files.length}
               isFolder={true}
-              onPress={handlePress}
+              onPress={() => setCurrentFolder(folder.name)}
             />
           ))}
     </View>
@@ -123,7 +121,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
-    paddingTop: 20,
     backgroundColor: "#fff",
   },
   topRow: {
@@ -172,7 +169,9 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 50,
+    alignItems: "center",
+    textAlign: "center",
   },
   backButton: {
     alignSelf: "flex-start",

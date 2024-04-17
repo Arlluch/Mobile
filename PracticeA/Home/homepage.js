@@ -175,7 +175,12 @@ function Homepage({ navigation }) {
       setActiveDropdown(dropdown);
     }
   };
-
+  const handleBoxPress = (item) => {
+    navigation.navigate("Location");
+  };
+  const handleBoxPresss = (item) => {
+    navigation.navigate("Alldoctors");
+  };
   const renderSuggestionItem = ({ item }) => (
     <TouchableOpacity
       style={styles.suggestionItem}
@@ -276,13 +281,18 @@ function Homepage({ navigation }) {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.boxContainer}>
             {DATA.map((item) => (
-              <Box
+              <TouchableOpacity
                 key={item.id}
-                color={item.color}
-                image={item.image}
-                text1={item.text1}
-                text2={item.text2}
-              />
+                onPress={() => handleBoxPress(item)}
+              >
+                <Box
+                  key={item.id}
+                  color={item.color}
+                  image={item.image}
+                  text1={item.text1}
+                  text2={item.text2}
+                />
+              </TouchableOpacity>
             ))}
           </View>
         </ScrollView>
@@ -295,13 +305,18 @@ function Homepage({ navigation }) {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.boxContainer}>
             {DATA1.map((item) => (
-              <Box
+              <TouchableOpacity
                 key={item.id}
-                color={item.color}
-                image={item.image}
-                text1={item.text1}
-                text2={item.text2}
-              />
+                onPress={() => handleBoxPresss(item)}
+              >
+                <Box
+                  key={item.id}
+                  color={item.color}
+                  image={item.image}
+                  text1={item.text1}
+                  text2={item.text2}
+                />
+              </TouchableOpacity>
             ))}
           </View>
         </ScrollView>
@@ -373,11 +388,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: "bold",
   },
   viewAll: {
-    fontSize: 16,
+    fontSize: 18,
     color: "black",
+    fontWeight: "500",
   },
   boxContainer: {
     flexDirection: "row",

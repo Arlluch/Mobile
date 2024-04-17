@@ -10,6 +10,7 @@ import {
   ScrollView,
   Platform,
   Image,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -87,105 +88,113 @@ function Editprofile({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.formContainer}>
-        <TouchableOpacity
-          onPress={() => alert("Change profile image")}
-          style={styles.profileImageContainer}
-        >
-          <Image source={profileImage} style={styles.profileImage} />
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : null}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.formContainer}>
           <TouchableOpacity
             onPress={() => alert("Change profile image")}
-            style={styles.changeImageButton}
+            style={styles.profileImageContainer}
           >
-            <FontAwesomeIcon icon={faCamera} style={styles.cameraIcon} />
-          </TouchableOpacity>
-        </TouchableOpacity>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>First Name</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Arlluch"
-            onChangeText={(text) => setFirstName(text)}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Last Name</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Aguinaldo"
-            onChangeText={(text) => setLastName(text)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Gender</Text>
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={(selectedValue) => {
-              setValue(selectedValue);
-              if (selectedValue !== null) {
-                setGender(selectedValue);
-              }
-            }}
-            setItems={setItems}
-            containerStyle={styles.dropdownContainer}
-            style={styles.input}
-            dropDownContainerStyle={styles.dropdown}
-            textStyle={styles.dropdownText}
-            dropDownStyle={styles.dropdownItem}
-            placeholder="Gender"
-            placeholderStyle={{ color: "#888" }}
-            zIndex={1000}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Birth Date</Text>
-          <View style={datePickerContainerStyle}>
-            <Text style={styles.datePickerText}>{renderBirthDate()}</Text>
+            <Image source={profileImage} style={styles.profileImage} />
             <TouchableOpacity
-              onPress={showDatePicker}
-              style={styles.calendarIconContainer}
+              onPress={() => alert("Change profile image")}
+              style={styles.changeImageButton}
             >
-              <FontAwesomeIcon
-                icon={faCalendarAlt}
-                style={styles.calendarIcon}
-              />
+              <FontAwesomeIcon icon={faCamera} style={styles.cameraIcon} />
             </TouchableOpacity>
-          </View>
-        </View>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          maximumDate={new Date(moment().subtract(1, "days"))}
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-        />
+          </TouchableOpacity>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Phone Number</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="0123456789"
-            onChangeText={(text) => setPhoneNumber(text)}
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>First Name</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Arlluch"
+              onChangeText={(text) => setFirstName(text)}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Last Name</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Aguinaldo"
+              onChangeText={(text) => setLastName(text)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Gender</Text>
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={(selectedValue) => {
+                setValue(selectedValue);
+                if (selectedValue !== null) {
+                  setGender(selectedValue);
+                }
+              }}
+              setItems={setItems}
+              containerStyle={styles.dropdownContainer}
+              style={styles.input}
+              dropDownContainerStyle={styles.dropdown}
+              textStyle={styles.dropdownText}
+              dropDownStyle={styles.dropdownItem}
+              placeholder="Gender"
+              placeholderStyle={{ color: "#888" }}
+              zIndex={1000}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Birth Date</Text>
+            <View style={datePickerContainerStyle}>
+              <Text style={styles.datePickerText}>{renderBirthDate()}</Text>
+              <TouchableOpacity
+                onPress={showDatePicker}
+                style={styles.calendarIconContainer}
+              >
+                <FontAwesomeIcon
+                  icon={faCalendarAlt}
+                  style={styles.calendarIcon}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            maximumDate={new Date(moment().subtract(1, "days"))}
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
           />
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Phone Number</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="0123456789"
+              onChangeText={(text) => setPhoneNumber(text)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Email Address</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="arlluchsample@gmail.com"
+              onChangeText={(text) => setEmail(text)}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.createButton}
+            onPress={handleRegister}
+          >
+            <Text style={styles.buttonTextt}>Save Changes</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Email Address</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="arlluchsample@gmail.com"
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
-        <TouchableOpacity style={styles.createButton} onPress={handleRegister}>
-          <Text style={styles.buttonTextt}>Save Changes</Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
       <View style={styles.bottomButtonsContainer}>
         <TouchableOpacity
           style={[
@@ -207,16 +216,20 @@ function Editprofile({ navigation }) {
           <Text style={styles.buttonText}>My Appointments</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  scrollContainer: {
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    paddingBottom: 100,
   },
   formContainer: {
     width: "80%",

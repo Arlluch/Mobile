@@ -68,6 +68,12 @@ const Ourdoctors = () => {
           placeholder="Search..."
           onChangeText={(text) => setSearchText(text)}
           value={searchText}
+          prefix={
+            <Image
+              source={require("../assets/search_icon.png")}
+              style={styles.searchIcon}
+            />
+          }
         />
 
         <TouchableOpacity
@@ -146,6 +152,16 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 10,
     paddingHorizontal: 10,
+    paddingLeft: 30,
+    backgroundColor: "#ECECEC",
+  },
+  searchIcon: {
+    position: "absolute",
+    left: 10,
+    top: 15,
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
   },
   filterIconContainer: {
     marginLeft: 10,

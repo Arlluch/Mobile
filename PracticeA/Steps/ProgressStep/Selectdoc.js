@@ -9,7 +9,7 @@ import {
   Image,
   TextInput,
 } from "react-native";
-import CardBox from "../Ongoingsteps/CardBoxfordoc";
+import CardBox from "../ProgressStep/CardBoxfordoc";
 import { useNavigation } from "@react-navigation/native";
 
 const windowWidth = Dimensions.get("window").width;

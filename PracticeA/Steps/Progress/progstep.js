@@ -1,10 +1,23 @@
 import React, { Component } from "react";
-import { View, ScrollView, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+  Platform,
+  Dimensions,
+} from "react-native";
 import PropTypes from "prop-types";
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+class ProgStep extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      nextBtnText: "Governmental",
+    };
+  }
 
-import ProgressButtons from "./progbutton";
-
-class progstep extends Component {
   onNextStep = async () => {
     this.props.onNext && (await this.props.onNext());
 
@@ -13,11 +26,19 @@ class progstep extends Component {
     }
 
     this.props.setActiveStep(this.props.activeStep + 1);
+    // Update the button text dynamically
+    if (this.state.nextBtnText === "Yes") {
+      this.setState({ nextBtnText: "Governmental" });
+    } else if (this.state.nextBtnText === "Governmental") {
+      this.setState({ nextBtnText: "No" });
+    }
   };
 
   onPreviousStep = () => {
     this.props.onPrevious && this.props.onPrevious();
-    this.props.setActiveStep(this.props.activeStep - 1);
+    this.props.setActiveStep(this.props.activeStep + 1);
+
+    this.setState({ nextBtnText: "No" });
   };
 
   onSubmit = () => {
@@ -26,13 +47,29 @@ class progstep extends Component {
 
   renderNextButton = () => {
     const btnStyle = {
-      textAlign: "center",
-      padding: 8,
+      width: windowWidth * 0.8,
+      height: windowHeight * 0.07,
+      backgroundColor: "#FFB200",
+      borderRadius: 100,
+      marginBottom: windowHeight * 0.3,
+      justifyContent: "center",
+      alignItems: "center",
+      ...Platform.select({
+        ios: {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+        },
+        android: {
+          elevation: 5,
+        },
+      }),
       ...this.props.nextBtnStyle,
     };
 
     const btnTextStyle = {
-      color: "#007AFF",
+      color: "#fff",
       fontSize: 18,
       ...this.props.nextBtnTextStyle,
     };
@@ -57,7 +94,8 @@ class progstep extends Component {
         <Text style={textStyle}>
           {this.props.activeStep === this.props.stepCount - 1
             ? this.props.finishBtnText
-            : this.props.nextBtnText}
+            : this.state.nextBtnText}
+          {""}
         </Text>
       </TouchableOpacity>
     );
@@ -65,13 +103,29 @@ class progstep extends Component {
 
   renderPreviousButton = () => {
     const btnStyle = {
-      textAlign: "center",
-      padding: 8,
+      width: windowWidth * 0.8,
+      height: windowHeight * 0.07,
+      backgroundColor: "#FFB200",
+      borderRadius: 100,
+      marginBottom: windowHeight * 0.05,
+      justifyContent: "center",
+      alignItems: "center",
+      ...Platform.select({
+        ios: {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+        },
+        android: {
+          elevation: 5,
+        },
+      }),
       ...this.props.previousBtnStyle,
     };
 
     const btnTextStyle = {
-      color: "#007AFF",
+      color: "#fff",
       fontSize: 18,
       ...this.props.previousBtnTextStyle,
     };
@@ -90,7 +144,11 @@ class progstep extends Component {
         disabled={this.props.previousBtnDisabled}
       >
         <Text style={textStyle}>
-          {this.props.activeStep === 0 ? "" : this.props.previousBtnText}
+          {this.props.activeStep === 0
+            ? "Private/Self-payers"
+            : this.props.activeStep === 1
+            ? "Yes"
+            : this.props.previousBtnText}
         </Text>
       </TouchableOpacity>
     );
@@ -100,12 +158,13 @@ class progstep extends Component {
     const scrollViewProps = this.props.scrollViewProps || {};
     const viewProps = this.props.viewProps || {};
     const isScrollable = this.props.scrollable;
-    const buttonRow = this.props.removeBtnRow ? null : (
-      <ProgressButtons
-        renderNextButton={this.renderNextButton}
-        renderPreviousButton={this.renderPreviousButton}
-      />
-    );
+    const buttonRow =
+      this.props.activeStep < 2 ? (
+        <View style={{ alignItems: "center" }}>
+          {this.renderPreviousButton()}
+          {this.renderNextButton()}
+        </View>
+      ) : null;
 
     return (
       <View style={{ flex: 1 }}>
@@ -121,7 +180,7 @@ class progstep extends Component {
   }
 }
 
-progstep.propTypes = {
+ProgStep.propTypes = {
   label: PropTypes.string,
   onNext: PropTypes.func,
   onPrevious: PropTypes.func,
@@ -144,9 +203,9 @@ progstep.propTypes = {
   scrollable: PropTypes.bool,
 };
 
-progstep.defaultProps = {
-  nextBtnText: "Next",
-  previousBtnText: "Previous",
+ProgStep.defaultProps = {
+  nextBtnText: "",
+  previousBtnText: "",
   finishBtnText: "Submit",
   nextBtnDisabled: false,
   previousBtnDisabled: false,
@@ -155,4 +214,4 @@ progstep.defaultProps = {
   scrollable: true,
 };
 
-export default progstep;
+export default ProgStep;

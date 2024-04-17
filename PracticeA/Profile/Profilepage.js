@@ -1,83 +1,98 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+
 const ProfilePage = () => {
   const navigation = useNavigation();
   const [activeButton, setActiveButton] = useState("Home");
   const [activeButton1, setActiveButton1] = useState("AAppointmentpage");
+
   const handleButtonPress = (buttonName) => {
     setActiveButton(buttonName);
     if (buttonName === "Home") {
       navigation.navigate("homepage");
     }
   };
+
   const handleButtonPress1 = (buttonName1) => {
     setActiveButton1(buttonName1);
     if (buttonName1 === "AAppointmentpage") {
       navigation.navigate("AAppointmentpage");
     }
   };
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={require("../assets/Doctor.png")}
-          style={styles.profileImage}
-        />
-        <Text style={styles.name}>John Doe</Text>
-        <Text style={styles.email}>john.doe@example.com</Text>
-      </View>
-      <Text style={styles.title}>Settings</Text>
-      <View style={styles.card}>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("Editprofile")}
-        >
-          <MaterialIcons name="person" size={24} color="black" />
-          <Text style={styles.itemText}>Edit Profile</Text>
-        </TouchableOpacity>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.innerContent}>
+          <View style={styles.header}>
+            <Image
+              source={require("../assets/Doctor.png")}
+              style={styles.profileImage}
+            />
+            <Text style={styles.name}>John Doe</Text>
+            <Text style={styles.email}>john.doe@example.com</Text>
+          </View>
+          <Text style={styles.title}>Account</Text>
+          <View style={styles.card}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Editprofile")}
+            >
+              <MaterialIcons name="person" size={24} color="black" />
+              <Text style={styles.itemText}>Edit Profile</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("Editpass")}
-        >
-          <MaterialIcons name="lock" size={24} color="black" />
-          <Text style={styles.itemText}>Change Password</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.item}>
-          <MaterialIcons name="notifications" size={24} color="black" />
-          <Text style={styles.itemText}>Notification</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.item}>
-          <MaterialIcons name="privacy-tip" size={24} color="black" />
-          <Text style={styles.itemText}>Privacy</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.title}>Support & Action</Text>
-      <View style={styles.card}>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("Report")}
-        >
-          <MaterialIcons name="report-problem" size={24} color="black" />
-          <Text style={styles.itemText}>Report a Problem</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => navigation.navigate("Faq")}
-        >
-          <MaterialIcons name="help" size={24} color="black" />
-          <Text style={styles.itemText}>Help & FAQ</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.item}>
-          <MaterialIcons name="policy" size={24} color="black" />
-          <Text style={styles.itemText}>Terms and Policies</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={styles.loginsmsButton}>
-        <Text style={styles.buttonsmsText}>Logout</Text>
-      </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Editpass")}
+            >
+              <MaterialIcons name="lock" size={24} color="black" />
+              <Text style={styles.itemText}>Change Password</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item}>
+              <MaterialIcons name="notifications" size={24} color="black" />
+              <Text style={styles.itemText}>Notification</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item}>
+              <MaterialIcons name="privacy-tip" size={24} color="black" />
+              <Text style={styles.itemText}>Privacy</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.title}>Support & Action</Text>
+          <View style={styles.card}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Report")}
+            >
+              <MaterialIcons name="report-problem" size={24} color="black" />
+              <Text style={styles.itemText}>Report a Problem</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => navigation.navigate("Faq")}
+            >
+              <MaterialIcons name="help" size={24} color="black" />
+              <Text style={styles.itemText}>Help & FAQ</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item}>
+              <MaterialIcons name="policy" size={24} color="black" />
+              <Text style={styles.itemText}>Terms and Policies</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={styles.logoutButton}>
+            <Text style={styles.buttonTextt}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
       <View style={styles.bottomButtonsContainer}>
         <TouchableOpacity
           style={[
@@ -106,6 +121,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  content: {
+    flex: 1,
+  },
+  innerContent: {
+    paddingBottom: 100, // Adjust as needed
   },
   header: {
     alignItems: "center",
@@ -152,17 +173,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
   },
-  loginsmsButton: {
-    width: 312,
-    marginTop: 30,
-    marginLeft: "12%",
-
+  logoutButton: {
+    width: "90%",
     height: 50,
-    backgroundColor: "#E7EDFD",
-    borderRadius: 100,
-    marginBottom: 40,
+    backgroundColor: "#F4F4F7",
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
+    marginBottom: 40,
+    marginTop: 30,
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -175,8 +195,13 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  buttonsmsText: {
-    color: "#33363F",
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  buttonTextt: {
+    color: "#000",
     fontSize: 24,
     fontWeight: "bold",
   },

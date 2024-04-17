@@ -52,8 +52,10 @@ import Cancelschedule from "./PracticeA/Appointmentpage/Cancelschedule";
 import Profilepage from "./PracticeA/Profile/Profilepage";
 import Editpass from "./PracticeA/Profile/Editpass";
 import Editprofile from "./PracticeA/Profile/Editprofile";
+import Selectdoc from "./PracticeA/Steps/ProgressStep/Selectdoc";
 import Report from "./PracticeA/Profile/Report";
 import Reportuser from "./PracticeA/Profile/Reportuser";
+
 import logoImage from "./PracticeA/assets/Logo.png";
 import doctorsImage from "./PracticeA/assets/Doctor.png";
 
@@ -230,7 +232,7 @@ const CustomDrawerContent = ({ navigation }) => {
         }}
       >
         <Text style={{ marginLeft: 20, fontSize: 20, color: "white" }}>
-          Feedback
+          FAQ/Help
         </Text>
       </TouchableOpacity>
       <View
@@ -294,7 +296,7 @@ export default function App() {
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{ headerTitle: "", headerShown: false }}
@@ -567,13 +569,34 @@ export default function App() {
           name="Filter"
           component={Filter}
           options={({ navigation }) => ({
-            headerTitle: "View",
+            headerTitle: "Filter",
             headerLeft: () => (
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
               </TouchableOpacity>
             ),
           })}
@@ -593,6 +616,7 @@ export default function App() {
             ),
           })}
         />
+
         <Stack.Screen
           name="Docprofile"
           component={Docprofile}
@@ -604,6 +628,27 @@ export default function App() {
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
               </TouchableOpacity>
             ),
           })}
@@ -622,9 +667,29 @@ export default function App() {
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
+              </TouchableOpacity>
+            ),
           })}
         />
-
         <Stack.Screen
           name="Viewdocarch"
           component={Viewdocarch}
@@ -636,6 +701,27 @@ export default function App() {
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
               </TouchableOpacity>
             ),
           })}
@@ -654,19 +740,62 @@ export default function App() {
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
+              </TouchableOpacity>
+            ),
           })}
         />
+
         <Stack.Screen
           name="Editpass"
           component={Editpass}
           options={({ navigation }) => ({
-            headerTitle: "Password",
+            headerTitle: "Change Password",
             headerLeft: () => (
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
               </TouchableOpacity>
             ),
           })}
@@ -684,8 +813,30 @@ export default function App() {
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
+              </TouchableOpacity>
+            ),
           })}
         />
+
         <Stack.Screen
           name="Report"
           component={Report}
@@ -697,6 +848,27 @@ export default function App() {
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
               </TouchableOpacity>
             ),
           })}
@@ -714,6 +886,27 @@ export default function App() {
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
+              </TouchableOpacity>
+            ),
           })}
         />
         <Stack.Screen
@@ -729,8 +922,30 @@ export default function App() {
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
+              </TouchableOpacity>
+            ),
           })}
         />
+
         <Stack.Screen
           name="Faq"
           component={Faq}
@@ -742,6 +957,27 @@ export default function App() {
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
               </TouchableOpacity>
             ),
           })}
@@ -813,8 +1049,46 @@ export default function App() {
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
+              </TouchableOpacity>
+            ),
           })}
         />
+
+        <Stack.Screen
+          name="Selectdoc"
+          component={Selectdoc}
+          options={({ navigation }) => ({
+            headerTitle: "Doctor's Office",
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{ marginLeft: 20 }}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+
         <Stack.Screen
           name="Notification"
           component={Notification}
@@ -826,6 +1100,27 @@ export default function App() {
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notification")}
+                style={{
+                  marginRight: 20,
+                  marginTop: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    marginLeft: 10,
+                  }}
+                  source={logoImage}
+                />
               </TouchableOpacity>
             ),
           })}
