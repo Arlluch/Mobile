@@ -9,9 +9,9 @@ import {
   Image,
   TextInput,
 } from "react-native";
-import CardBox from "./CardBoxforalldoc";
+import CardBox from "./CardBoxforourdoc";
 import { useNavigation } from "@react-navigation/native";
-
+import BottomButtons from "../Bottom/Bottombutton";
 const windowWidth = Dimensions.get("window").width;
 
 const Ourdoctors = () => {
@@ -105,26 +105,7 @@ const Ourdoctors = () => {
         </View>
       </ScrollView>
 
-      <View style={styles.bottomButtonsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton === "Home" ? styles.activeButton : null,
-          ]}
-          onPress={() => handleButtonPress("Home")}
-        >
-          <Text style={styles.buttonText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
-          ]}
-          onPress={() => handleButtonPress1("AAppointmentpage")}
-        >
-          <Text style={styles.buttonText}>My Appointments</Text>
-        </TouchableOpacity>
-      </View>
+      <BottomButtons/>
     </View>
   );
 };
@@ -179,38 +160,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 80,
   },
-  bottomButtonsContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderTopWidth: 3,
-    borderTopColor: "rgba(0, 0, 0, 0.2)",
-  },
-  bottomButton: {
-    backgroundColor: "#fff",
-    height: 50,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-  },
-  activeButton: {
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
-  },
+ 
 });
 
 export default Ourdoctors;

@@ -12,30 +12,18 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-
+import BottomButtons from "../Bottom/Bottombutton";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const AAppointmentpage = () => {
   const [activeButton2, setActiveButton2] = useState("All");
-  const [activeButton1, setActiveButton1] = useState("AAppointmentpage");
+ 
   const navigation = useNavigation();
   const [searchText, setSearchText] = useState("");
   const [activeButton, setActiveButton] = useState(true);
 
-  const handleButtonPress = (buttonName) => {
-    setActiveButton2(buttonName);
-    if (buttonName === "Home") {
-      navigation.navigate("homepage");
-    }
-  };
-
-  const handleButtonPress1 = (buttonName1) => {
-    setActiveButton1(buttonName1);
-    if (buttonName1 === "AAppointmentpage") {
-      navigation.navigate("AAppointmentpage");
-    }
-  };
+ 
 
   const navigateToFilter = () => {
     navigation.navigate("Filter");
@@ -193,26 +181,7 @@ const AAppointmentpage = () => {
       >
         <Text style={[styles.buttonText, { color: "#FFF" }]}>Message Us</Text>
       </TouchableOpacity>
-      <View style={styles.bottomButtonsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton2 === "Home" ? styles.activeButton2 : null,
-          ]}
-          onPress={() => handleButtonPress("Home")}
-        >
-          <Text style={styles.buttonText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
-          ]}
-          onPress={() => handleButtonPress1("AAppointmentpage")}
-        >
-          <Text style={styles.buttonText}>My Appointments</Text>
-        </TouchableOpacity>
-      </View>
+      <BottomButtons/>
     </View>
   );
 };
@@ -348,38 +317,7 @@ const styles = StyleSheet.create({
     color: "#000",
     fontWeight: "bold",
   },
-  bottomButtonsContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderTopWidth: 3,
-    borderTopColor: "rgba(0, 0, 0, 0.2)",
-  },
-  bottomButton: {
-    backgroundColor: "#fff",
-    height: 50,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-  },
-  activeButton1: {
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
-  },
+ 
   smallButtonsContainer: {
     marginLeft: 0,
     marginRight: 10,

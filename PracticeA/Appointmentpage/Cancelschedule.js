@@ -129,7 +129,7 @@ const Cancelschedule = () => {
             />
             {value === "others" && (
               <TextInput
-                style={[styles.otherReasonInput, { textAlignVertical: "top" }]} // Set textAlignVertical to "top"
+                style={[styles.otherReasonInput, { textAlignVertical: "top" }]}
                 placeholder="Enter Other Reason"
                 value={otherReason}
                 onChangeText={handleInputChange}

@@ -2,9 +2,8 @@ import React from "react";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { TouchableOpacity, Image, Text, StyleSheet, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -53,6 +52,7 @@ import Profilepage from "./PracticeA/Profile/Profilepage";
 import Editpass from "./PracticeA/Profile/Editpass";
 import Editprofile from "./PracticeA/Profile/Editprofile";
 import Selectdoc from "./PracticeA/Steps/ProgressStep/Selectdoc";
+import Ongoing from "./PracticeA/Steps/ProgressStep/Ongoing";
 import Report from "./PracticeA/Profile/Report";
 import Reportuser from "./PracticeA/Profile/Reportuser";
 
@@ -60,13 +60,13 @@ import logoImage from "./PracticeA/assets/Logo.png";
 import doctorsImage from "./PracticeA/assets/Doctor.png";
 
 const Drawer = createDrawerNavigator();
-const Stack = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
+
 const CustomDrawerContent = ({ navigation }) => {
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
     navigation.closeDrawer();
   };
-
   return (
     <DrawerContentScrollView
       style={{
@@ -232,7 +232,7 @@ const CustomDrawerContent = ({ navigation }) => {
         }}
       >
         <Text style={{ marginLeft: 20, fontSize: 20, color: "white" }}>
-          Feedback
+          FAQ/Help
         </Text>
       </TouchableOpacity>
       <View
@@ -319,28 +319,31 @@ export default function App() {
               height: 100,
             },
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "homepage",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
+
         <Drawer.Screen
           name="AAppointmentpage"
           component={AAppointmentpage}
@@ -353,31 +356,33 @@ export default function App() {
                 <FontAwesomeIcon icon={faBars} size={24} color="black" />
               </TouchableOpacity>
             ),
-            headerTitle: "Welcome",
+            headerTitle: "My Appointments",
             headerTransparent: false,
             headerStyle: {
               height: 100,
             },
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("#")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "AAppointmentpage",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -399,25 +404,27 @@ export default function App() {
               height: 100,
             },
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("#")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Location",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -440,25 +447,27 @@ export default function App() {
               height: 100,
             },
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("#")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Alldoctors",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -480,25 +489,27 @@ export default function App() {
               height: 100,
             },
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("#")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "AppointmentList",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -521,25 +532,27 @@ export default function App() {
               height: 100,
             },
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("#")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Symptoms",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -557,46 +570,54 @@ export default function App() {
             headerTitle: "Our doctors",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 20 }}
-              >
-                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name="Filter"
-          component={Filter}
-          options={({ navigation }) => ({
-            headerTitle: "Filter",
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate("Doctoroffice", {
+                    goBackTo: "Doctoroffice",
+                  })
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Ourdoctors",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Filter"
+          component={Filter}
+          options={({ navigation, route }) => ({
+            headerTitle: "Filter",
+            headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
+                onPress={() =>
+                  navigation.navigate(route.params?.goBackTo || "Alldoctors")
+                }
+                style={{ marginLeft: 20 }}
               >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
+                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
           })}
@@ -608,7 +629,11 @@ export default function App() {
             headerTitle: "Activation",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate(
+                    navigation.canGoBack() ? null : "Homepage"
+                  )
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -624,32 +649,38 @@ export default function App() {
             headerTitle: "Doctor's Profile",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate("Doctoroffice", {
+                    goBackTo: "Ourdoctors",
+                  })
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Docprofile",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -661,15 +692,37 @@ export default function App() {
             headerTitle: "View",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate("AAppointmentpage")}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Viewdoc",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
+            ),
           })}
         />
-
         <Stack.Screen
           name="Viewdocarch"
           component={Viewdocarch}
@@ -677,11 +730,34 @@ export default function App() {
             headerTitle: "View",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate("AAppointmentpage")}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Viewdocarch",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -693,32 +769,38 @@ export default function App() {
             headerTitle: "Cancel",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate(
+                    navigation.canGoBack() ? null : "Homepage"
+                  )
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Cancelschedule",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -730,32 +812,38 @@ export default function App() {
             headerTitle: "Change Password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate("Profilepage", {
+                    goBackTo: "Editprofile",
+                  })
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Editpass",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -766,32 +854,38 @@ export default function App() {
             headerTitle: "Edit Profile",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate("Profilepage", {
+                    goBackTo: "Editprofile",
+                  })
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Editprofile",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -803,32 +897,34 @@ export default function App() {
             headerTitle: "Report a problem",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate("homepage")}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Report",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -839,32 +935,38 @@ export default function App() {
             headerTitle: "Report a problem",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate(
+                    navigation.canGoBack() ? null : "Homepage"
+                  )
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Reportuser",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -875,32 +977,34 @@ export default function App() {
             headerTitle: "My Profile",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate("homepage")}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Profilepage",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -912,6 +1016,44 @@ export default function App() {
             headerTitle: "FAQ/Help",
             headerLeft: () => (
               <TouchableOpacity
+                onPress={() => navigation.navigate("homepage")}
+                style={{ marginLeft: 20 }}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Faq",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Ongoing"
+          component={Ongoing}
+          options={({ navigation }) => ({
+            headerTitle: "Appointment",
+            headerLeft: () => (
+              <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{ marginLeft: 20 }}
               >
@@ -919,25 +1061,27 @@ export default function App() {
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Faq",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -970,7 +1114,11 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate(
+                    navigation.canGoBack() ? null : "Homepage"
+                  )
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -986,7 +1134,11 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate(
+                    navigation.canGoBack() ? null : "Homepage"
+                  )
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -1002,32 +1154,38 @@ export default function App() {
             headerTitle: "Doctor's Office",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate("Alldoctors", {
+                    goBackTo: "Alldoctors",
+                  })
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
             headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Doctoroffice",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
             ),
           })}
         />
@@ -1045,45 +1203,47 @@ export default function App() {
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
+            headerRight: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Notification", {
+                      goBackTo: "Selectdoc",
+                    })
+                  }
+                  style={{ marginRight: 10, marginTop: 0 }}
+                >
+                  <FontAwesomeIcon icon={faBell} size={24} color="black" />
+                </TouchableOpacity>
+                <View style={{ marginRight: 10 }}>
+                  <Image
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                    source={logoImage}
+                  />
+                </View>
+              </View>
+            ),
           })}
         />
-
-        <Stack.Screen
+        <Drawer.Screen
           name="Notification"
           component={Notification}
-          options={({ navigation }) => ({
+          options={({ navigation, route }) => ({
             headerTitle: "Notification",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate(route.params.goBackTo)}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
               </TouchableOpacity>
             ),
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <FontAwesomeIcon icon={faBell} size={24} color="black" />
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    marginLeft: 10,
-                  }}
-                  source={logoImage}
-                />
-              </TouchableOpacity>
-            ),
           })}
         />
+
         <Stack.Screen
           name="Fps1"
           component={Fps1}
@@ -1091,7 +1251,11 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate(
+                    navigation.canGoBack() ? null : "Homepage"
+                  )
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -1099,10 +1263,21 @@ export default function App() {
             ),
           })}
         />
+
         <Stack.Screen
           name="Loginsms"
           component={Loginsms}
-          options={{ headerTitle: "", headerShown: false }}
+          options={({ navigation }) => ({
+            headerTitle: "",
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{ marginLeft: 20 }}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <Stack.Screen
           name="Verifylogin"
@@ -1117,7 +1292,11 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate(
+                    navigation.canGoBack() ? null : "Homepage"
+                  )
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -1132,7 +1311,11 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() =>
+                  navigation.navigate(
+                    navigation.canGoBack() ? null : "Homepage"
+                  )
+                }
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />

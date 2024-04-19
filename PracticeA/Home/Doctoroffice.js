@@ -13,7 +13,7 @@ import {
   FlatList,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import BottomButtons from "../Bottom/Bottombutton";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -93,7 +93,10 @@ function Doctoroffice({ navigation }) {
             </Text>
           </TouchableOpacity>
         </ImageBackground>
-        <TouchableOpacity style={styles.AppointmentButton}>
+        <TouchableOpacity
+          style={styles.AppointmentButton}
+          onPress={() => navigation.navigate("Ongoing")}
+        >
           <Text style={[styles.buttonText, { color: "#FFF" }]}>
             Make an Appointment
           </Text>
@@ -204,28 +207,7 @@ function Doctoroffice({ navigation }) {
           <Text style={styles.footerText}>Impressum and Datenschutz</Text>
         </View>
       </ScrollView>
-
-      <View style={styles.bottomButtonsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton === "Home" ? styles.activeButton : null,
-          ]}
-          onPress={() => handleButtonPress("Home")}
-        >
-          <Text style={styles.buttonText}>Home</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
-          ]}
-          onPress={() => handleButtonPress1("AAppointmentpage")}
-        >
-          <Text style={styles.buttonText}>My Appointments</Text>
-        </TouchableOpacity>
-      </View>
+      <BottomButtons/>
     </View>
   );
 }
@@ -250,38 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  bottomButtonsContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderTopWidth: 3,
-    borderTopColor: "rgba(0, 0, 0, 0.2)",
-  },
-  bottomButton: {
-    backgroundColor: "#fff",
-    height: 50,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-  },
-  activeButton: {
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
-  },
+
   boxcard: {
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     padding: 30,

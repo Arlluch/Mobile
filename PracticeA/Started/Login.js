@@ -248,12 +248,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 14,
-    fontWeight: "600",
   },
   buttonsmsText: {
     color: "#33363F",
     fontSize: 14,
-    fontWeight: "600",
   },
   horizontalLineContainer: {
     flexDirection: "row",

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
-import ProgSteps from "../Steps/Progress/progsteps";
-import ProgStep from "../Steps/Progress/progstep";
-import Insurance from "../Steps/ProgressStep/Insurance";
-import Visit from "../Steps/ProgressStep/Visit";
-import Loginsignup from "../Steps/ProgressStep/Loginsignup";
-import FileList from "../Steps/ProgressStep/FileList";
+import ProgSteps from "../Progress/progsteps";
+import ProgStep from "../Progress/progstep";
+import Insurance from "../ProgressStep/Insurance";
+import Visit from "../ProgressStep/Visit";
+import Loginsignup from "../ProgressStep/Loginsignup";
+import FileList from "../ProgressStep/FileList";
 
 class Steps extends Component {
   static navigationOptions = {
@@ -80,7 +80,7 @@ class Steps extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff", 
+    backgroundColor: "#fff",
   },
 });
 

@@ -119,15 +119,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
     backgroundColor: "#fff",
+    paddingTop: 20, 
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
   },
   topRow: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
+    justifyContent: "space-between", 
     marginBottom: 20,
+    paddingHorizontal: 20, 
+  },
+  backButton: {
+    marginRight: 10,
+  },
+  path: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: "bold",
+    
+  },
+  searchIcon: {
+    marginLeft: 10,
   },
   card: {
     flexDirection: "row",
@@ -148,7 +167,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   folderContainer: {
-    width: "100%",
+    width: " 95%",
     alignItems: "center",
   },
   icon: {
@@ -166,34 +185,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#A6A6A6",
   },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 50,
-    alignItems: "center",
-    textAlign: "center",
-  },
-  backButton: {
-    alignSelf: "flex-start",
-    marginRight: 10,
-  },
-  path: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  searchIcon: {
-    marginLeft: 10,
-  },
   searchInput: {
-    width: "100%",
+    width: "95%",
     height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
+    borderColor: "#ccc",
+    borderWidth: 0.5,
     borderRadius: 5,
     paddingHorizontal: 10,
+    marginBottom: 20,
   },
 });
+
+
+
 
 export default FolderList;

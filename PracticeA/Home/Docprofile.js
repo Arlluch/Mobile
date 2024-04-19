@@ -12,13 +12,11 @@ import {
   Animated,
   FlatList,
 } from "react-native";
-
+import BottomButtons from "../Bottom/Bottombutton";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 function Docprofile({ navigation }) {
-  const [activeButton, setActiveButton] = useState("Home");
-  const [activeButton1, setActiveButton1] = useState("AAppointmentpage");
   const [visible, setVisible] = useState(true);
   const [tableHeight, setTableHeight] = useState(new Animated.Value(0));
   const data = [
@@ -54,19 +52,6 @@ function Docprofile({ navigation }) {
       <Text style={styles.cell}>{item.time}</Text>
     </View>
   );
-  const handleButtonPress = (buttonName) => {
-    setActiveButton(buttonName);
-    if (buttonName === "Home") {
-      navigation.navigate("homepage");
-    }
-  };
-
-  const handleButtonPress1 = (buttonName1) => {
-    setActiveButton1(buttonName1);
-    if (buttonName1 === "AAppointmentpage") {
-      navigation.navigate("AAppointmentpage");
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -91,7 +76,10 @@ function Docprofile({ navigation }) {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.appointmentButton}>
+        <TouchableOpacity
+          style={styles.appointmentButton}
+          onPress={() => navigation.navigate("Ongoing")}
+        >
           <Text style={[styles.buttonText, { color: "#FFF" }]}>
             Make an Appointment
           </Text>
@@ -144,28 +132,7 @@ function Docprofile({ navigation }) {
           <Text style={styles.footerText}>Impressum and Datenschutz</Text>
         </View>
       </ScrollView>
-
-      <View style={styles.bottomButtonsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton === "Home" ? styles.activeButton : null,
-          ]}
-          onPress={() => handleButtonPress("Home")}
-        >
-          <Text style={styles.buttonText}>Home</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
-          ]}
-          onPress={() => handleButtonPress1("AAppointmentpage")}
-        >
-          <Text style={styles.buttonText}>My Appointments</Text>
-        </TouchableOpacity>
-      </View>
+      <BottomButtons />
     </View>
   );
 }
@@ -216,38 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#8696BB",
   },
-  bottomButtonsContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderTopWidth: 3,
-    borderTopColor: "rgba(0, 0, 0, 0.2)",
-  },
-  bottomButton: {
-    backgroundColor: "#fff",
-    height: 50,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-  },
-  activeButton: {
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
-  },
+
   appointmentButton: {
     width: "90%",
     height: 50,
@@ -348,6 +284,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   footer: {
+    marginTop: 15,
     flexDirection: "row",
     justifyContent: "center",
     paddingHorizontal: 20,

@@ -37,7 +37,7 @@ const CardBoxforourdoc = ({
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.buttonn, { width: "65%" }, { height: "100%" }]}
-            onPress={() => {}}
+            onPress={() => navigation.navigate("Ongoing")}
           >
             <Text style={styles.buttonText}>Make an Appointment</Text>
           </TouchableOpacity>

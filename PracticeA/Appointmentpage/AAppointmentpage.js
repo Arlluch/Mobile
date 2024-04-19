@@ -8,11 +8,12 @@ import {
   Dimensions,
   Image,
   TextInput,
+  Platform,
 } from "react-native";
 import CardBox from "./Archivebutton";
 import CardBox1 from "./Appointmentbutton";
-
 import { useNavigation } from "@react-navigation/native";
+import BottomButtons from "../Bottom/Bottombutton";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -23,18 +24,21 @@ const AAppointmentpage = () => {
   const navigation = useNavigation();
   const [searchText, setSearchText] = useState("");
   const [activeButton, setActiveButton] = useState(true);
+
   const handleButtonPress = (buttonName) => {
     setActiveButton2(buttonName);
     if (buttonName === "Home") {
       navigation.navigate("homepage");
     }
   };
+
   const handleButtonPress1 = (buttonName1) => {
     setActiveButton1(buttonName1);
     if (buttonName1 === "AAppointmentpage") {
       navigation.navigate("AAppointmentpage");
     }
   };
+
   const navigateToFilter = () => {
     navigation.navigate("Filter");
   };
@@ -71,6 +75,12 @@ const AAppointmentpage = () => {
           placeholder="Search..."
           onChangeText={(text) => setSearchText(text)}
           value={searchText}
+          prefix={
+            <Image
+              source={require("../assets/search_icon.png")}
+              style={styles.searchIcon}
+            />
+          }
         />
 
         <TouchableOpacity
@@ -112,7 +122,7 @@ const AAppointmentpage = () => {
         <View style={styles.titleContainer}>
           {activeButton ? (
             <>
-              {doctorsData.slice(0, 2).map((doctor, index) => (
+              {doctorsData.slice(0, 5).map((doctor, index) => (
                 <CardBox1
                   key={index}
                   name={doctor.name}
@@ -135,28 +145,9 @@ const AAppointmentpage = () => {
               ))}
             </>
           )}
-        </View>
+        </View> 
       </ScrollView>
-      <View style={styles.bottomButtonsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton2 === "Home" ? styles.activeButton2 : null,
-          ]}
-          onPress={() => handleButtonPress("Home")}
-        >
-          <Text style={styles.buttonText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.bottomButton,
-            activeButton1 === "AAppointmentpage" ? styles.activeButton1 : null,
-          ]}
-          onPress={() => handleButtonPress1("AAppointmentpage")}
-        >
-          <Text style={styles.buttonText}>My Appointments</Text>
-        </TouchableOpacity>
-      </View>
+      <BottomButtons/>
     </View>
   );
 };
@@ -164,21 +155,7 @@ const AAppointmentpage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     backgroundColor: "white",
-  },
-  title: {
-    fontSize: windowWidth * 0.08,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: windowHeight * 0.02,
-  },
-  scrollContainer: {
-    paddingHorizontal: 10,
-  },
-  titleContainer: {
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   searchBarContainer: {
     flexDirection: "row",
@@ -194,13 +171,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: "5%",
-    marginTop: "3%",
-    marginBottom: "3%",
-    marginLeft: "5%",
-    marginRight: "5%",
+    paddingHorizontal: 10,
+    marginBottom: 20,
   },
-
   searchInput: {
     flex: 1,
     height: 50,
@@ -208,6 +181,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 10,
     paddingHorizontal: 10,
+    paddingLeft: 30,
+    backgroundColor: "#ECECEC",
   },
   filterIconContainer: {
     marginLeft: 10,
@@ -218,17 +193,14 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   filterButton: {
-    width: "58%",
-    marginHorizontal: 5,
+    flex: 1,
     height: 50,
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFB200",
-    borderRadius: 100,
-    marginBottom: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    marginLeft: 5,
+    marginRight: 5,
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -245,37 +217,9 @@ const styles = StyleSheet.create({
     color: "#000",
     fontWeight: "bold",
   },
-  bottomButtonsContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderTopWidth: 3,
-    borderTopColor: "rgba(0, 0, 0, 0.2)",
-  },
-  bottomButton: {
-    backgroundColor: "#fff",
-    height: 50,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-  },
-  activeButton1: {
-    backgroundColor: "#FFB200",
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
+  titleContainer: {
+    paddingHorizontal: 10,
+    paddingBottom: 20,
   },
 });
 

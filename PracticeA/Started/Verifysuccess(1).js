@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -6,35 +6,32 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  ImageBackground,
   Platform,
 } from "react-native";
-import BottomButtons from "../Bottom/Bottombutton";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-function Reschedulesuccess({ navigation }) {
- 
+function Verifysuccess({ navigation }) {
   const handleVerify = () => {
-    navigation.navigate("homepage");
+    navigation.navigate("Login");
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={styles.formContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.logo}
-              source={require("../assets/Doctor.png")}
-            />
-          </View>
-          <Text style={styles.doctorName}>Doctor's Name</Text>
-          <Text style={styles.specialization}>Specialization</Text>
-
-          <Text style={styles.weJustSent1}>{`THANK YOU!`}</Text>
+          <ImageBackground
+            style={styles.background}
+            source={require("../assets/add-user.png")}
+          ></ImageBackground>
+          <Text style={styles.weJustSent1}>{`Thank you for signing up!`}</Text>
           <Text style={styles.weJustSent}>
             {`
-Your appointment has been successfully re-scheduled. \n We look forward to seeing you at the new date and time.
+Your account is ready to go. Start scheduling appointments hassle-free. 
+Need help? Reach out anytime.
+Welcome aboard!
 `}
           </Text>
         </View>
@@ -46,11 +43,10 @@ Your appointment has been successfully re-scheduled. \n We look forward to seein
             onPress={handleVerify}
             style={styles.verifyButtonContainer}
           >
-            <Text style={styles.verifyButton}>Continue</Text>
+            <Text style={styles.verifyButton}>Done</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <BottomButtons/>
     </View>
   );
 }
@@ -63,46 +59,32 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: "center",
+    marginTop: windowHeight * 0.2,
   },
   formContainer: {
     width: "80%",
     alignItems: "center",
     marginBottom: 20,
   },
-  imageContainer: {
-    borderRadius: windowWidth * 0.325,
-    overflow: "hidden",
-    marginBottom: 10,
-  },
-  doctorName: {
-    fontSize: 24,
-    fontWeight: "600",
-    color: "#242760",
-    marginBottom: 5,
-  },
-  specialization: {
-    fontSize: 18,
-    color: "#544C4C",
-    marginBottom: 10,
-  },
-
   weJustSent: {
     fontSize: 15,
-    marginTop: 20,
+    marginTop: -10,
     textAlign: "center",
     alignSelf: "stretch",
   },
   weJustSent1: {
-    fontSize: 36,
+    fontSize: 24,
     marginTop: 20,
     textAlign: "center",
     alignSelf: "stretch",
     fontWeight: "bold",
   },
-
-  blueText: {
-    color: "#4894FE",
+  inputStyle: {
+    fontSize: 32,
+    color: "black",
+    textAlign: "center",
   },
+
   cardContainer: {
     position: "absolute",
     bottom: 0,
@@ -113,7 +95,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: windowWidth,
-    height: windowHeight * 0.22,
+    height: windowHeight * 0.13,
     backgroundColor: "#fff",
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
@@ -139,7 +121,7 @@ const styles = StyleSheet.create({
   },
   verifyButtonContainer: {
     position: "absolute",
-    bottom: windowHeight * 0.125,
+    bottom: windowHeight * 0.04,
     width: windowWidth,
     alignItems: "center",
     justifyContent: "center",
@@ -174,10 +156,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: windowWidth * 0.65,
-    height: windowWidth * 0.65,
+    width: 150,
+    height: 150,
   },
-  
 });
 
-export default Reschedulesuccess;
+export default Verifysuccess;
