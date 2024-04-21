@@ -1114,11 +1114,7 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(
-                    navigation.canGoBack() ? null : "Homepage"
-                  )
-                }
+                onPress={() => navigation.goBack()}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -1134,11 +1130,7 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(
-                    navigation.canGoBack() ? null : "Homepage"
-                  )
-                }
+                onPress={() => navigation.goBack()}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -1251,11 +1243,7 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(
-                    navigation.canGoBack() ? null : "Homepage"
-                  )
-                }
+                onPress={() => navigation.goBack()}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -1292,11 +1280,7 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(
-                    navigation.canGoBack() ? null : "Homepage"
-                  )
-                }
+                onPress={() => navigation.goBack()}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />
@@ -1311,11 +1295,7 @@ export default function App() {
             headerTitle: "Forgot password",
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(
-                    navigation.canGoBack() ? null : "Homepage"
-                  )
-                }
+                onPress={() => navigation.goBack()}
                 style={{ marginLeft: 20 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} size={24} color="black" />

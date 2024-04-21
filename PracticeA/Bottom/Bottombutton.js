@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 function Bottombutton() {
@@ -16,13 +16,16 @@ function Bottombutton() {
   return (
     <View style={styles.bottomButtonsContainer}>
       <TouchableOpacity
-        style={[
-          styles.bottomButton,
-          isHomeActive ? styles.activeButton : null,
-        ]}
+        style={[styles.bottomButton, isHomeActive ? styles.activeButton : null]}
         onPress={() => handleButtonPress("homepage")}
       >
-        <Text style={[styles.buttonText, isHomeActive ? styles.activeText : null]}>
+        <Image
+          source={require("../assets/homebottom.png")}
+          style={styles.icon}
+        />
+        <Text
+          style={[styles.buttonText, isHomeActive ? styles.activeText : null]}
+        >
           Home
         </Text>
       </TouchableOpacity>
@@ -33,6 +36,10 @@ function Bottombutton() {
         ]}
         onPress={() => handleButtonPress("AAppointmentpage")}
       >
+        <Image
+          source={require("../assets/myappointment.png")}
+          style={styles.icon}
+        />
         <Text
           style={[
             styles.buttonText,
@@ -69,6 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 10,
     marginLeft: 10,
+    flexDirection: "row",
   },
   buttonText: {
     fontSize: 16,
@@ -78,6 +86,11 @@ const styles = StyleSheet.create({
   },
   activeText: {
     color: "#fff",
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
   },
 });
 
