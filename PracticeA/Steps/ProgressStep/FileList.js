@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
+import CardBox from "../Progress/CardBoxfordoc";
 const FolderListItem = ({ name, isFolder, itemsCount, onPress }) => {
   const icon = isFolder
     ? require("../../assets/Folder.png")
@@ -43,24 +43,66 @@ const FolderList = () => {
     },
   ];
 
+  const doctorsData = [
+    {
+      name: "John Doe",
+      specialization: "Internal Medicine",
+      language: "English, German",
+      location: "Im Obergarten 8, Hofheim am Taunus Taunus",
+      schedule: "Sunday, June 24 11:00 - 13:00",
+    },
+    {
+      name: "John Doe",
+      specialization: "Internal Medicine",
+      language: "English, German",
+      location: "Im Obergarten 8, Hofheim am Taunus Taunus",
+      schedule: "Sunday, June 24 11:00 - 12:00",
+    },
+    {
+      name: "John Doe",
+      specialization: "Medicine",
+      language: "German",
+      location: "Im Obergarten 8, Hofheim am Taunus Taunus",
+      schedule: "Sunday, June 24 12:00 - 13:00",
+    },
+  ];
+
+  const [currentStep, setCurrentStep] = useState(1);
   const [currentFolder, setCurrentFolder] = useState(null);
+  const [currentFile, setCurrentFile] = useState(null);
   const [searchVisible, setSearchVisible] = useState(false);
   const navigation = useNavigation();
 
-  const handlePress = (fileName) => {
-    navigation.navigate("Selectdoc", { fileName });
+  const handleFolderPress = (folderName) => {
+    setCurrentFolder(folderName);
+    setCurrentStep(2);
+  };
+
+  const handleFilePress = (fileName) => {
+    setCurrentFile(fileName);
+    setCurrentStep(3);
   };
 
   const handleBackButtonPress = () => {
-    setCurrentFolder(null);
+    if (currentStep === 1) {
+      navigation.goBack();
+    } else if (currentStep === 2) {
+      setCurrentFolder(null);
+      setCurrentStep(1);
+    } else {
+      setCurrentFile(null);
+      setCurrentStep(2);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
-        {currentFolder
+        {currentStep === 1
           ? "Please choose the right appointment type"
-          : "Please choose the right appointment type"}
+          : currentStep === 2
+          ? "Please choose the right appointment type"
+          : "Which doctor do you want to go?"}
       </Text>
       <View style={styles.topRow}>
         {currentFolder && (
@@ -71,7 +113,9 @@ const FolderList = () => {
             <MaterialIcons name="arrow-back" size={24} color="black" />
           </TouchableOpacity>
         )}
-        <Text style={styles.path}>{currentFolder ? currentFolder : ""}</Text>
+        <Text style={styles.path}>
+          {currentStep === 3 ? currentFile : currentFolder ? currentFolder : ""}
+        </Text>
         <TouchableOpacity
           onPress={() => setSearchVisible(!searchVisible)}
           style={styles.searchIcon}
@@ -91,7 +135,17 @@ const FolderList = () => {
           onChangeText={(text) => console.log(text)}
         />
       )}
-      {currentFolder
+      {currentStep === 1
+        ? folders.map((folder, index) => (
+            <FolderListItem
+              key={index}
+              name={folder.name}
+              itemsCount={folder.files.length}
+              isFolder={true}
+              onPress={() => handleFolderPress(folder.name)}
+            />
+          ))
+        : currentStep === 2
         ? folders
             .find((folder) => folder.name === currentFolder)
             .files.map((file, index) => (
@@ -99,16 +153,17 @@ const FolderList = () => {
                 key={index}
                 name={file}
                 isFolder={false}
-                onPress={() => handlePress(file)}
+                onPress={() => handleFilePress(file)}
               />
             ))
-        : folders.map((folder, index) => (
-            <FolderListItem
+        : doctorsData.map((doctor, index) => (
+            <CardBox
               key={index}
-              name={folder.name}
-              itemsCount={folder.files.length}
-              isFolder={true}
-              onPress={() => setCurrentFolder(folder.name)}
+              name={doctor.name}
+              specialization={doctor.specialization}
+              language={doctor.language}
+              location={doctor.location}
+              schedule={doctor.schedule}
             />
           ))}
     </View>
@@ -120,7 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "#fff",
-    paddingTop: 20, 
+    paddingTop: 20,
   },
   header: {
     fontSize: 24,
@@ -132,9 +187,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    justifyContent: "space-between", 
+    justifyContent: "space-between",
     marginBottom: 20,
-    paddingHorizontal: 20, 
+    paddingHorizontal: 20,
   },
   backButton: {
     marginRight: 10,
@@ -143,7 +198,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: "bold",
-    
   },
   searchIcon: {
     marginLeft: 10,
@@ -195,8 +249,5 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-
-
-
 
 export default FolderList;

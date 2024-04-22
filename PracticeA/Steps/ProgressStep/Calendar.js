@@ -8,6 +8,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
+import availableTimes from "./availableTimes";
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
@@ -54,23 +55,63 @@ const Calendar = () => {
 
   const handleDayClick = (day) => {
     setSelectedDay(day);
-    setShowAvailableTime([14, 15, 16, 17, 25, 26, 27].includes(day));
+
+    const currentDate = new Date();
+
+    const fiveDaysFromNow = new Date();
+    fiveDaysFromNow.setDate(currentDate.getDate() + 5);
+
+    if (day) {
+      const selectedDate = new Date(selectedYear, selectedMonth, day);
+      if (selectedDate <= fiveDaysFromNow) {
+        setShowAvailableTime(true);
+      } else {
+        setShowAvailableTime(false);
+      }
+    }
   };
 
   const renderCalendarGrid = () => {
     const grid = generateCalendarGrid();
+    const currentDate = new Date();
+
+    const availableDays = [];
+
+    availableTimes.forEach((time) => {
+      const dateTime = new Date(time.dateTime);
+      const day = dateTime.getDate();
+      const month = dateTime.getMonth();
+      if (
+        !availableDays.some(
+          (dayObj) => dayObj.day === day && dayObj.month === month
+        )
+      ) {
+        availableDays.push({ day, month });
+      }
+    });
+
     return grid.map((day, index) => {
       let style = styles.dayContainer;
-      let isActive = false;
+      let isPastDate = false;
+      let hasAvailableTime = false;
 
       if (day) {
         if (
-          [14, 15, 16, 17, 25, 26, 27].includes(day) &&
-          selectedMonth === new Date().getMonth() &&
-          selectedYear === new Date().getFullYear()
+          selectedMonth === currentDate.getMonth() &&
+          selectedYear === currentDate.getFullYear()
         ) {
-          style = [styles.dayContainer, styles.activeDay];
-          isActive = true;
+          if (day < currentDate.getDate()) {
+            style = [styles.dayContainer, styles.pastDay];
+            isPastDate = true;
+          }
+        }
+
+        const dayHasAvailableTime = availableDays.some(
+          (dayObj) => dayObj.day === day && dayObj.month === selectedMonth
+        );
+        if (dayHasAvailableTime) {
+          style = [styles.dayContainer, styles.activeContainer];
+          hasAvailableTime = true;
         }
 
         if (day === selectedDay) {
@@ -80,8 +121,14 @@ const Calendar = () => {
         return (
           <TouchableOpacity
             key={index}
-            style={style}
+            style={[
+              style,
+              isPastDate && styles.pastDay,
+              hasAvailableTime && styles.activeContainer,
+              day === selectedDay && hasAvailableTime && styles.clickedDay,
+            ]}
             onPress={() => handleDayClick(day)}
+            disabled={isPastDate}
           >
             <Text style={styles.dayText}>{day}</Text>
           </TouchableOpacity>
@@ -93,41 +140,35 @@ const Calendar = () => {
   };
 
   const renderAvailableTime = () => {
-    let availableTimes = [];
+    const selectedDateTimes = availableTimes.filter((time) => {
+      const dateTime = new Date(time.dateTime);
+      const day = dateTime.getDate();
+      const month = dateTime.getMonth();
+      return day === selectedDay && month === selectedMonth;
+    });
 
-    switch (selectedDay) {
-      case 14:
-        availableTimes = ["11:00", "14:00", "17:00", "20:00"];
-        break;
-      case 15:
-        availableTimes = ["09:00", "11:00", "12:00", "15:00", "16:00", "18:00"];
-        break;
-      case 16:
-        availableTimes = ["10:00", "13:00", "16:00", "19:00"];
-        break;
-      case 17:
-        availableTimes = ["11:00", "14:00", "17:00", "20:00"];
-        break;
-      case 25:
-        availableTimes = ["09:00", "12:00", "15:00", "18:00"];
-        break;
-      case 26:
-        availableTimes = ["10:00", "13:00", "16:00", "19:00"];
-        break;
-      case 27:
-        availableTimes = ["09:00", "13:00", "15:00", "19:00"];
-        break;
-      default:
-        availableTimes = [];
-        break;
+    if (selectedDateTimes.length === 0) {
+      return (
+        <View style={styles.availableTimeTable}>
+          <Text>No available times for selected date</Text>
+        </View>
+      );
     }
+
     return (
       <View style={styles.availableTimeTable}>
-        {availableTimes.map((time, index) => (
-          <TouchableOpacity key={index} style={styles.availableTimeButton}>
-            <Text style={styles.availableTimeText}>{time}</Text>
-          </TouchableOpacity>
-        ))}
+        {selectedDateTimes.map((time, index) => {
+          const dateTime = new Date(time.dateTime);
+          const hours = ("0" + dateTime.getHours()).slice(-2);
+          const minutes = ("0" + dateTime.getMinutes()).slice(-2);
+          const formattedTime = `${hours}:${minutes}`;
+
+          return (
+            <TouchableOpacity key={index} style={styles.availableTimeButton}>
+              <Text style={styles.availableTimeText}>{formattedTime}</Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     );
   };
@@ -135,81 +176,84 @@ const Calendar = () => {
   const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.cardBox}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <TouchableOpacity onPress={goToPreviousMonth}>
-              <Text style={styles.navigation}>{"<"}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setShowMonthPicker(true)}>
-              <Text
-                style={[
-                  styles.monthYear,
-                  selectedMonth === new Date().getMonth() &&
-                  selectedYear === new Date().getFullYear()
-                    ? styles.currentMonth
-                    : null,
-                ]}
-              >
-                {new Date(selectedYear, selectedMonth).toLocaleString(
-                  "default",
-                  { month: "long" }
-                )}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setShowYearPicker(true)}>
-              <Text
-                style={[
-                  styles.monthYear,
-                  selectedYear === new Date().getFullYear()
-                    ? styles.currentYear
-                    : null,
-                ]}
-              >
-                {selectedYear}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={goToNextMonth}>
-              <Text style={styles.navigation}>{">"}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.calendar}>
-            <View style={styles.weekDays}>
-              {weekDays.map((day, index) => (
-                <Text key={index} style={styles.weekDay}>
-                  {day}
+    <View style={styles.container}>
+      <Text style={styles.title}>Select Schedule</Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.cardBox}>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <TouchableOpacity onPress={goToPreviousMonth}>
+                <Text style={styles.navigation}>{"<"}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowMonthPicker(true)}>
+                <Text
+                  style={[
+                    styles.monthYear,
+                    selectedMonth === new Date().getMonth() &&
+                    selectedYear === new Date().getFullYear()
+                      ? styles.currentMonth
+                      : null,
+                  ]}
+                >
+                  {new Date(selectedYear, selectedMonth).toLocaleString(
+                    "default",
+                    { month: "long" }
+                  )}
                 </Text>
-              ))}
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowYearPicker(true)}>
+                <Text
+                  style={[
+                    styles.monthYear,
+                    selectedYear === new Date().getFullYear()
+                      ? styles.currentYear
+                      : null,
+                  ]}
+                >
+                  {selectedYear}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={goToNextMonth}>
+                <Text style={styles.navigation}>{">"}</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.daysContainer}>{renderCalendarGrid()}</View>
+            <View style={styles.calendar}>
+              <View style={styles.weekDays}>
+                {weekDays.map((day, index) => (
+                  <Text key={index} style={styles.weekDay}>
+                    {day}
+                  </Text>
+                ))}
+              </View>
+              <View style={styles.daysContainer}>{renderCalendarGrid()}</View>
+            </View>
+            {showAvailableTime && (
+              <View style={styles.availableTimeContainer}>
+                {renderAvailableTime()}
+              </View>
+            )}
+            <MonthPicker
+              visible={showMonthPicker}
+              onClose={() => setShowMonthPicker(false)}
+              selectedMonth={selectedMonth}
+              onSelect={(month) => {
+                setSelectedMonth(month);
+                setShowMonthPicker(false);
+              }}
+            />
+            <YearPicker
+              visible={showYearPicker}
+              onClose={() => setShowYearPicker(false)}
+              selectedYear={selectedYear}
+              onSelect={(year) => {
+                setSelectedYear(year);
+                setShowYearPicker(false);
+              }}
+            />
           </View>
-          {showAvailableTime && (
-            <View style={styles.availableTimeContainer}>
-              {renderAvailableTime()}
-            </View>
-          )}
-          <MonthPicker
-            visible={showMonthPicker}
-            onClose={() => setShowMonthPicker(false)}
-            selectedMonth={selectedMonth}
-            onSelect={(month) => {
-              setSelectedMonth(month);
-              setShowMonthPicker(false);
-            }}
-          />
-          <YearPicker
-            visible={showYearPicker}
-            onClose={() => setShowYearPicker(false)}
-            selectedYear={selectedYear}
-            onSelect={(year) => {
-              setSelectedYear(year);
-              setShowYearPicker(false);
-            }}
-          />
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -219,7 +263,7 @@ const MonthPicker = ({ visible, onClose, selectedMonth, onSelect }) => {
     <Modal
       visible={visible}
       transparent={true}
-      animationType="slide" // Change animationType to slide
+      animationType="slide"
       onRequestClose={onClose}
     >
       <View style={styles.modalContainer}>
@@ -233,7 +277,7 @@ const MonthPicker = ({ visible, onClose, selectedMonth, onSelect }) => {
               >
                 <Text
                   style={[
-                    styles.modalText, // Add modalText style
+                    styles.modalText,
                     selectedMonth === index ? styles.selectedItem : null,
                     selectedMonth === index ? styles.currentMonth : null,
                   ]}
@@ -254,7 +298,6 @@ const MonthPicker = ({ visible, onClose, selectedMonth, onSelect }) => {
   );
 };
 
-// Update the YearPicker component (similar to MonthPicker changes)
 const YearPicker = ({ visible, onClose, selectedYear, onSelect }) => {
   if (!visible) return null;
 
@@ -269,7 +312,7 @@ const YearPicker = ({ visible, onClose, selectedYear, onSelect }) => {
     <Modal
       visible={visible}
       transparent={true}
-      animationType="slide" // Change animationType to slide
+      animationType="slide"
       onRequestClose={onClose}
     >
       <View style={styles.modalContainer}>
@@ -283,7 +326,7 @@ const YearPicker = ({ visible, onClose, selectedYear, onSelect }) => {
               >
                 <Text
                   style={[
-                    styles.modalText, // Add modalText style
+                    styles.modalText,
                     selectedYear === year ? styles.selectedItem : null,
                     selectedYear === year ? styles.currentYear : null,
                   ]}
@@ -304,7 +347,7 @@ const YearPicker = ({ visible, onClose, selectedYear, onSelect }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: "95%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#fff",
@@ -323,7 +366,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    alignItems: "center",
+    marginHorizontal: 10,
     padding: 15,
   },
 
@@ -331,9 +374,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
-    width: "90%",
+    paddingRight: 20,
+    width: "100%",
   },
+
   navigation: {
     fontSize: 24,
   },
@@ -349,7 +393,8 @@ const styles = StyleSheet.create({
   },
   calendar: {
     alignItems: "center",
-    width: "90%",
+    width: "88%",
+    justifyContent: "center",
   },
   weekDays: {
     flexDirection: "row",
@@ -366,20 +411,18 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   dayContainer: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
     borderColor: "lightgrey",
     borderRadius: 20,
     margin: 3,
+    marginLeft: "2%",
   },
   dayText: {
     fontSize: 16,
-  },
-  activeDay: {
-    backgroundColor: "#FFB200",
   },
   availableTimeContainer: {
     marginTop: 20,
@@ -466,6 +509,14 @@ const styles = StyleSheet.create({
   },
   clickedDay: {
     backgroundColor: "#FF8E00",
+  },
+  pastDay: {
+    backgroundColor: "lightgray",
+    opacity: 0.5,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });
 

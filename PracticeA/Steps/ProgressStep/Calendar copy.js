@@ -8,7 +8,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import availableTimes from "../Started/availableTimes";
+import availableTimes from "./availableTimes";
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
@@ -74,11 +74,9 @@ const Calendar = () => {
   const renderCalendarGrid = () => {
     const grid = generateCalendarGrid();
     const currentDate = new Date();
-  
-  
+
     const availableDays = [];
-  
-  
+
     availableTimes.forEach((time) => {
       const dateTime = new Date(time.dateTime);
       const day = dateTime.getDate();
@@ -91,12 +89,12 @@ const Calendar = () => {
         availableDays.push({ day, month });
       }
     });
-  
+
     return grid.map((day, index) => {
       let style = styles.dayContainer;
       let isPastDate = false;
       let hasAvailableTime = false;
-  
+
       if (day) {
         if (
           selectedMonth === currentDate.getMonth() &&
@@ -107,7 +105,7 @@ const Calendar = () => {
             isPastDate = true;
           }
         }
-  
+
         const dayHasAvailableTime = availableDays.some(
           (dayObj) => dayObj.day === day && dayObj.month === selectedMonth
         );
@@ -115,11 +113,11 @@ const Calendar = () => {
           style = [styles.dayContainer, styles.activeContainer];
           hasAvailableTime = true;
         }
-  
+
         if (day === selectedDay) {
           style = [styles.dayContainer, styles.clickedDay];
         }
-  
+
         return (
           <TouchableOpacity
             key={index}
@@ -148,7 +146,7 @@ const Calendar = () => {
       const month = dateTime.getMonth();
       return day === selectedDay && month === selectedMonth;
     });
-  
+
     if (selectedDateTimes.length === 0) {
       return (
         <View style={styles.availableTimeTable}>
@@ -156,7 +154,7 @@ const Calendar = () => {
         </View>
       );
     }
-  
+
     return (
       <View style={styles.availableTimeTable}>
         {selectedDateTimes.map((time, index) => {
@@ -164,7 +162,7 @@ const Calendar = () => {
           const hours = ("0" + dateTime.getHours()).slice(-2);
           const minutes = ("0" + dateTime.getMinutes()).slice(-2);
           const formattedTime = `${hours}:${minutes}`;
-  
+
           return (
             <TouchableOpacity key={index} style={styles.availableTimeButton}>
               <Text style={styles.availableTimeText}>{formattedTime}</Text>
@@ -174,7 +172,6 @@ const Calendar = () => {
       </View>
     );
   };
-  
 
   const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -392,9 +389,8 @@ const styles = StyleSheet.create({
   },
   calendar: {
     alignItems: "center",
-    width: "100%",
+    width: "88%",
     justifyContent: "center",
-   
   },
   weekDays: {
     flexDirection: "row",

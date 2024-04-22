@@ -6,7 +6,7 @@ import Insurance from "../ProgressStep/Insurance";
 import Visit from "../ProgressStep/Visit";
 import Loginsignup from "../ProgressStep/Loginsignup";
 import FileList from "../ProgressStep/FileList";
-
+import Calendar from "../ProgressStep/Calendar";
 class Steps extends Component {
   static navigationOptions = {
     header: null,
@@ -55,7 +55,10 @@ class Steps extends Component {
             onNext={this.onNextStep}
             onPrevious={this.onPrevStep}
             scrollViewProps={this.defaultScrollViewProps}
-          />
+          >
+            <Calendar />
+          </ProgStep>
+
           <ProgStep
             label="Information"
             onNext={this.onNextStep}

@@ -8,6 +8,7 @@ const CardBox = ({
   location,
   schedule,
   scheduleFontSize,
+  onPress,
 }) => {
   return (
     <View style={styles.container}>
@@ -31,10 +32,7 @@ const CardBox = ({
           </Text>
         </Text>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.buttonn, { width: "100%" }, { height: "100%" }]}
-            onPress={() => {}}
-          >
+          <TouchableOpacity style={styles.button} onPress={onPress}>
             <Text style={styles.buttonText}>Select</Text>
           </TouchableOpacity>
         </View>
@@ -117,14 +115,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    backgroundColor: "#63b4ff",
-    borderRadius: 50,
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    marginRight: 10,
-    justifyContent: "center",
-  },
-  buttonn: {
     backgroundColor: "#ffb200",
     borderRadius: 50,
     paddingVertical: 8,
